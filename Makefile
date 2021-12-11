@@ -52,6 +52,7 @@ norme:
 gitpush:			fclean
 					sh .gitpush || {									\
 					echo '#!/bin/sh' > .gitpush;						\
+					echo 'echo .gitpush >> .gitignore' >> .gitpush;		\
 					echo 'git status' >> .gitpush;						\
 					echo 'git add .' >> .gitpush;						\
 					echo 'git status' >> .gitpush;						\
