@@ -9,14 +9,14 @@
 # include <errno.h>
 # include <stdbool.h>
 
-# define	R	1
-# define	NO	2
-# define	SO	4
-# define	WE	8
-# define	EA	16
-# define	S	32
-# define	F	64
-# define	C	128
+# define	R	0b00000001
+# define	NO	0b00000010
+# define	SO	0b00000100
+# define	WE	0b00001000
+# define	EA	0b00010000
+# define	S	0b00100000
+# define	F	0b01000000
+# define	C	0b10000000
 
 typedef struct	s_player
 {
