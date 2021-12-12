@@ -3,23 +3,20 @@
 int	check_texture(char *line, t_data *s)
 {
 	printf("Check textures ->\n");
-	printf("strlen: %d\n", (int)ft_strlen(line));
-
-	if (*line && !(s->f >= NO))
-	{
-		s->txtr = (t_textures *)ft_calloc(1, sizeof(t_textures));
-		if (!(s->txtr))
-			ft_exit(strerror(errno), 1);
-		printf("Memory allocation\n");
-	}
+	printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
 	while (*line)
 	{
 		if (*line == ' ' || *line == '\t')
 			line++;
+		if (*line && !(s->f >= NO))
+		{
+			s->txtr = (t_textures *)ft_calloc(1, sizeof(t_textures));
+			if (!(s->txtr))
+				ft_exit(strerror(errno), 1);
+			printf("Memory allocation\n");
+		}
 
-		printf("->1	slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-
-		if (!ft_strncmp(line, "NO", 2) && (line += 2))
+		if (!ft_strncmp(line, "NO",  2) && (line += 2))
 			s->f |= NO;
 		else if (!ft_strncmp(line, "SO", 2) && (line += 2))
 			s->f ^= SO;
@@ -30,38 +27,22 @@ int	check_texture(char *line, t_data *s)
 		else if (!ft_strncmp(line, "S", 1) && line++)
 			s->f ^= S;
 
-		printf("->2	slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-
 		if (!ft_strncmp(line, "./", 2) && *(line + 2))
 		{
-			int len = ft_strlen(line) - 2;
-			printf("->4	slen: %d	len: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), len, line, s->f);
 			int i = 0;
-			while (*(line + 2 + i) && (ft_isalpha(*(line + 2 + i)) || *(line + 2 + i) == '_'))
-			{
-				printf("%d", ft_isalpha(*(line + 2 + i)));
-				printf("|->|%c|	", *(line + 2 + i));
-				printf("i|=%d\n", i + 1);
-				i++;
-			}
+			while (*(line + 2 + i) && (ft_isalpha(*(line + 2 + i)) || ft_isdigit(*(line + 2 + i)) || *(line + 2 + i) == '_')) {
+				 /* printf("%2d|->	|%c|\n", i + 1, *(line + 2 + i)); */ i++; }
 			int j = i;
-			while (*(line + 2 + j) && (*(line + 2 + j) == ' ' || *(line + 2 + j) == '\t'))
-				{
-					printf(" |->|%c|	", *(line + 2 + j));
-					printf("j|=|%d|\n", j + 1);
-					j++;
-				}
-			printf("Saldo: len= %d	i= %d	j= %d| > %d\n", len, i, j, len - j);
-			if (!(len - j))
-			{
-				s->txtr->no = ft_substr(line, 0, i + 2);
-				printf("\n\nline:	|%s|\nno:	|%s|\n", line, s->txtr->no);
-			}
-			else
+			while (*(line + 2 + j) && (*(line + 2 + j) == ' ' || *(line + 2 + j) == '\t')) {
+				/* printf("%2d|->	|%c|\n", j + 1, *(line + 2 + j)); */ j++; }
+			if ((ft_strlen(line) - 2  - j))
 				ft_exit("Incorrect PATH!", 1);
-		}
 
-		printf("->3	slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+			s->txtr->no = ft_substr(line, 0, i + 2); /*Прописать зависимость s-txtr->* от параметров */
+			return (1);
+		}
+		printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+		printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
 		sleep(1);
 	}
 		printf("Check textures <-\n");
@@ -71,7 +52,7 @@ int	check_texture(char *line, t_data *s)
 
 int	check_resolution(char *line, t_data *s)
 {
-	if (s->f ^ R)
+	if (!(s->f & R))
 	{
 		printf("Check resolution ->\n");
 		s->rslt = (t_resolution *)ft_calloc(1, sizeof(t_resolution));
@@ -99,7 +80,7 @@ int	check_resolution(char *line, t_data *s)
 						line++;
 			}
 		}
-		// printf("rslt:	line:	%s	h=%d	w=%d\n", line, s->rslt->height, s->rslt->width);
+		printf("rslt:	line:	%s	h=%d	w=%d\n", line, s->rslt->height, s->rslt->width);
 		printf("Check resolution <-\n");
 		return (1);
 	}
