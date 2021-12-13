@@ -1,27 +1,43 @@
 #include "Includes/cub3d.h"
 
+int	check_color(char *line, t_data *s)
+{
+	(void)line;
+	(void)s;
+	return (0);
+}
+
 char	*check_path(char *line, t_data *s, int mask)
 {
-	while (*line == ' ' || *line == '\t')
-		line++;
+printf("|%s|\n",line);
+	line = ft_strtrim(line, " ");
+printf("|%s|\n",line);
 	if (ft_strncmp(line, "./", 2) && *(line + 2))
 		return (NULL);
 	int i = 0;
-	while (*(line + 2 + i) && (ft_isalpha(*(line + 2 + i)) || ft_isdigit(*(line + 2 + i)) || *(line + 2 + i) == '_')) {
-			/* printf("%2d|->	|%c|\n", i + 1, *(line + 2 + i)); */ i++; }
-	int j = i;
-	while (*(line + 2 + j) && (*(line + 2 + j) == ' ' || *(line + 2 + j) == '\t')) {
-		/* printf("%2d|->	|%c|\n", j + 1, *(line + 2 + j)); */ j++; }
-	if ((ft_strlen(line) - 2  - j))
-		ft_exit("Incorrect PATH!", 1);
+	while (*(line + 2 + i) && (ft_isalnum(*(line + 2 + i)) || *(line + 2 + i) == '/' || *(line + 2 + i) == '_' || *(line + 2 + i) == '.')) {
+printf("%2d|->	|%c|\n", i + 1, *(line + 2 + i));
+		if (*(line + 2 + i) == '.')
+		{
+			if (!((!ft_strncmp(line + 2 + i, ".png", 4) || !ft_strncmp(line + 2 + i, ".xmp", 4)) && ft_strlen(line + 2 + i) == 4))
+				ft_exit("Incorrect file extension!", 1);
+			if (!ft_isalnum(*(line + 1 + i)))
+				ft_exit("Incorrect path!", 1);
+		}
+		i++;
+	}
+	if (ft_strchr(line + 2, '.') == NULL || ft_strlen(line + 2 + i))
+		ft_exit("Incorrect path!", 1);
 	s->f |= mask;
+	if (open(ft_substr(line, 0, i + 2), O_RDONLY) == -1)
+		ft_exit(strerror(errno), 1);
 	return (ft_substr(line, 0, i + 2));
 }
 
 int	check_texture(char *line, t_data *s)
 {
 	printf("Check textures ->\n");
-	printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+	// printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
 	while (*line)
 	{
 		while (*line == ' ' || *line == '\t')
@@ -33,8 +49,7 @@ int	check_texture(char *line, t_data *s)
 				ft_exit(strerror(errno), 1);
 			printf("Memory allocation\n");
 		}
-		int mask = 0;
-
+		int mask;
 		mask = s->f;
 
 		if (!ft_strncmp(line, "NO",  2) && (line += 2))
@@ -48,25 +63,18 @@ int	check_texture(char *line, t_data *s)
 		else if (!ft_strncmp(line, "S", 1) && line++)
 			s->txtr->s = check_path(line, s, S);
 		
-		if (s->f & mask)
-		{
-			printf("Есть совпадения! %d\n", s->f);
-			printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-			if (s->txtr)
-				printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
-			sleep(1);
-			return (1);
-		}
-
-
-
-
-		printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
 		if (s->txtr)
 			printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
+		printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
 		sleep(1);
+
+		if (s->f & mask)
+			return (1);
 	}
-		printf("Check textures <-\n");
+		// if (s->txtr)
+		// 	printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
+		// printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+		// printf("Check textures <-\n");
 		return (0);
 
 }
@@ -81,7 +89,7 @@ int	check_resolution(char *line, t_data *s)
 			ft_exit(strerror(errno), 1);
 		while (*line)
 		{
-			if (*line == ' ' || *line == '\t')
+			while (*line == ' ' || *line == '\t')
 				line++;
 			if (*line == 'R' && line++)
 			{
@@ -130,9 +138,12 @@ int main(int ac, char **av) {
 		printf("=>	Start:\n");
 		ret_gnl = get_next_line(fd, &line);
 		printf("strlen: %zu\n", ft_strlen(line));
+
 		if (check_resolution(line, &s))
 			continue ;
 		if (check_texture(line, &s))
+			continue ;
+		if (check_color(line, &s))
 			continue ;
 
 		// free(line);
