@@ -1,8 +1,11 @@
 #include "Includes/cub3d.h"
 
-unsigned int	 check_color_fc(char *line, unsigned int *side)
+unsigned int	 check_color_fc(char *line, t_data *s, int mask)
 {
-
+	unsigned int *f_or_c = s->txtr->f;
+	if (mask == C)
+	f_or_c = s->txtr->c;
+	
 	while (*line == ' ' || *line == '\t')
 		line++;
 
@@ -10,37 +13,36 @@ unsigned int	 check_color_fc(char *line, unsigned int *side)
 	int j = 0;
 	int c = 0;
 	int d = 0;
+
 	
 	while (*(line + i))
 	{
-		if (!(ft_isdigit(*(line + i)) || *(line + i) == ',' || *(line + i) == ' ' || *(line + i) == '\t'|| *(line + i) == '+'))
+		if (s->f & mask || !(ft_isdigit(*(line + i)) || *(line + i) == ',' || *(line + i) == ' ' || *(line + i) == '\t'|| *(line + i) == '+'))
 			ft_exit("Incorrect color!", 1);
 		d |= ft_isdigit(*(line + i));
 		if (*(line + i) == ',')
 		{
-			printf("----\nC	%d,%d,%d\n----\n", side[0], side[1], side[2]);
-			printf("c = %d | d = %d |%s| |%c| |%d| |%d|\n", c, d, line, *(line + i), i, j);
 			if (c > 2 || !d)
 				ft_exit("Incorrect ccccc!", 1);
-			side[c] = (unsigned int)ft_atoi(line + i - j + c);
+			f_or_c[c] = (unsigned int)ft_atoi(line + i - j + c);
 			j = 0;
 			d = 0;
 			c++;
 
 		}
 		else if (c == 2 && c++)
-			side[2] = (unsigned int)ft_atoi(line + i - j + 2);
+			f_or_c[2] = (unsigned int)ft_atoi(line + i - j + 2);
 		i++;
 		j++;
 	}
-	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-
+	s->f |= mask;
 	return (0);
 }
 
 int	check_color(char *line, t_data *s)
 {
 	printf("\033[32mCheck color ->\033[0m\n");
+	// unsigned int g[3];
 
 	if (*line)
 	{
@@ -57,14 +59,13 @@ int	check_color(char *line, t_data *s)
 
 		if (!ft_strncmp(line, "F",  1) && line++)
 		{
-			check_color_fc(line, s->txtr->f);
-			s->f |= F;
-
+			check_color_fc(line, s, F);
+			// printf("----\ng	%d,%d,%d\n----\n", g[0], g[1], g[2]);
+			
 		}
 		else if (!ft_strncmp(line, "C", 1) && line++)
 		{
-			check_color_fc(line, s->txtr->c);
-			s->f |= C;
+			check_color_fc(line, s, C);
 
 		}
 
