@@ -1,10 +1,39 @@
 #include "Includes/cub3d.h"
 
-unsigned int	 check_color_fc(char *line, t_data *s, int mask)
+unsigned int	 check_color_fc(char *line, unsigned int *side)
 {
-	(void)line;
-	(void)s;
-	(void)mask;
+
+	while (*line == ' ' || *line == '\t')
+		line++;
+
+	int i = 0;
+	int j = 0;
+	int c = 0;
+	int d = 0;
+	
+	while (*(line + i))
+	{
+		if (!(ft_isdigit(*(line + i)) || *(line + i) == ',' || *(line + i) == ' ' || *(line + i) == '\t'|| *(line + i) == '+'))
+			ft_exit("Incorrect color!", 1);
+		d |= ft_isdigit(*(line + i));
+		if (*(line + i) == ',')
+		{
+			printf("----\nC	%d,%d,%d\n----\n", side[0], side[1], side[2]);
+			printf("c = %d | d = %d |%s| |%c| |%d| |%d|\n", c, d, line, *(line + i), i, j);
+			if (c > 2 || !d)
+				ft_exit("Incorrect ccccc!", 1);
+			side[c] = (unsigned int)ft_atoi(line + i - j + c);
+			j = 0;
+			d = 0;
+			c++;
+
+		}
+		else if (c == 2 && c++)
+			side[2] = (unsigned int)ft_atoi(line + i - j + 2);
+		i++;
+		j++;
+	}
+	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 
 	return (0);
 }
@@ -13,11 +42,9 @@ int	check_color(char *line, t_data *s)
 {
 	printf("\033[32mCheck color ->\033[0m\n");
 
-	printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
 	if (*line)
 	{
-		while (*line == ' ' || *line == '\t')
-			line++;
+		line = ft_strtrim(line, " \t");
 		if (*line && !(s->f >= NO))
 		{
 			s->txtr = (t_textures *)ft_calloc(1, sizeof(t_textures));
@@ -30,74 +57,14 @@ int	check_color(char *line, t_data *s)
 
 		if (!ft_strncmp(line, "F",  1) && line++)
 		{
+			check_color_fc(line, s->txtr->f);
+			s->f |= F;
 
-	// /*1*/	printf("|%s|\n",line);
-			line = ft_strtrim(line, " ");
-			// printf("|%s|\n",line);
-	
-			int i = 0;
-			int j = 0;
-			int c = 0;
-			int d = 0;
-			
-	/*2*/	while (*(line + i))
-			{
-				if (!(ft_isdigit(*(line + i)) || *(line + i) == ',' || *(line + i) == ' ' || *(line + i) == '\t'))
-					ft_exit("Incorrect color!", 1);
-				printf("%2d|->	|%c|\n", i, *(line + i));
-				d ^= ft_isdigit(*(line + i));
-				if (*(line + i) == ',' && !d)
-				{
-					printf("|%s| - |%c|	d= %d\n",line + i - j, *(line + i - j + c ), d);
-					ft_exit("Incorrect!", 1);
-
-				}
-
-				if (*(line + i) == ',')
-				{
-				if (c >2)
-				{
-					printf("i=%d j=%d c=%d\nF %3d,%3d,%3d\nC %3d,%3d,%3d\n\n", i, j, c, s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
-					printf("|%s| - |%c|	d= %d\n",line + i - j, *(line + i - j + c ), d);
-					ft_exit("Incorrect ccccc!", 1);
-
-				}
-					// printf("|%s|\n",line);
-					printf("|%s| - |%c|	d= %d	",line + i - j, *(line + i - j + c ), d);
-					s->txtr->f[c] = (unsigned int)ft_atoi(line + i - j + c);
-					// printf("|%s|\n",line);
-					printf("i=%d j=%d c=%d\nF %3d,%3d,%3d\nC %3d,%3d,%3d\n\n", i, j, c, s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
-					j = 0;
-					c++;
-					d = 0;
-
-				}
-				else if (c == 2){
-					// printf("|%s|\n",line);
-					printf("	|%s| - |%c|	d= %d\n",line + i - j, *(line + i - j + c ), d);
-					s->txtr->f[c] = (unsigned int)ft_atoi(line + i - j + c);
-					// printf("|%s|\n",line);
-					printf("i=%d j=%d c=%d\nF %3d,%3d,%3d\nC %3d,%3d,%3d\n\n", i, j, c, s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
-					// break ;
-					c++;
-				}
-				i++;
-				j++;
-				usleep(100000);
-			}
-			printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			// s->txtr->f = check_color_fc(line, s, F);
-			// s->txtr->f[0] = ft_atoi(line);
-
-			// printf("3-|%s|\n",line);
-			// printf("----\nF	%d,%d,%d\nC	%d,%d,%d\n----\n", s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
-			// line = ft_strchr(line, ',');
-			// printf("4-|%s|\n",line);
-			// *s->txtr->f = *ft_split(line, ',');
 		}
-		else if (!ft_strncmp(line, "C", 2) && line++)
+		else if (!ft_strncmp(line, "C", 1) && line++)
 		{
-			// s->txtr->c = check_color_fc(line, s, C);
+			check_color_fc(line, s->txtr->c);
+			s->f |= C;
 
 		}
 
@@ -112,7 +79,9 @@ int	check_color(char *line, t_data *s)
 	}	
 	printf("\033[33mCheck color <-\033[0m\n");
 	return (0);
-}
+} 
+//  printf("i=%d j=%d c=%d\nF %3d,%3d,%3d\nC %3d,%3d,%3d\n\n", i, j, c, s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
+
 
 char	*check_path(char *line, t_data *s, int mask)
 {
@@ -246,7 +215,7 @@ int main(int ac, char **av) {
 		ret_gnl = get_next_line(fd, &line);
 		// printf("strlen: %zu\n", ft_strlen(line));
 
-		// printf("|%s|\n",line);
+		printf("|%s|\n",line);
 		line = ft_strtrim(line, " ");
 		// printf("|%s|\n",line);
 
