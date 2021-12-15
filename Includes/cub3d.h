@@ -42,8 +42,8 @@ typedef struct	s_textures
 	char			*we;
 	char			*ea;
 	char			*s;
-	unsigned int	*f;
-	unsigned int	*c;
+	unsigned int	f[3];
+	unsigned int	c[3];
 }				t_textures;
 
 typedef struct s_data

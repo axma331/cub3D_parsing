@@ -1,9 +1,99 @@
 #include "Includes/cub3d.h"
 
-int	check_color(char *line, t_data *s)
+unsigned int	 check_color_fc(char *line, t_data *s, int mask)
 {
 	(void)line;
 	(void)s;
+	(void)mask;
+
+	return (0);
+}
+
+int	check_color(char *line, t_data *s)
+{
+	printf("Check color ->\n");
+
+	printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+	if (*line)
+	{
+		while (*line == ' ' || *line == '\t')
+			line++;
+		if (*line && !(s->f >= NO))
+		{
+			s->txtr = (t_textures *)ft_calloc(1, sizeof(t_textures));
+			if (!(s->txtr))
+				ft_exit(strerror(errno), 1);
+			printf("Memory allocation\n");
+		}
+		int mask;
+		mask = s->f;
+
+		if (!ft_strncmp(line, "F",  1) && line++)
+		{
+
+	/*1*/	printf("|%s|\n",line);
+			line = ft_strtrim(line, " ");
+			printf("|%s|\n",line);
+	
+			int i = 0;
+			int j = 0;
+			int k = 0;
+			int c = 0;
+	/*2*/	while (*(line + i))
+			{
+				if (!(ft_isdigit(*(line + i)) || *(line + i) == ',' || *(line + i) == ' ' || *(line + i) == '\t'))
+					ft_exit("Incorrect color!", 1);
+				printf("%2d|->	|%c|\n", i + 1, *(line + i));
+				if (*(line + i) == ',')
+				{
+					printf("|%s|\n",line);
+					printf("|%s| - |%c|\n",line + i - j, *(line + i - j));
+					s->txtr->f[c++] = (unsigned int)ft_atoi(line++ + i - j);
+					printf("|%s|\n",line);
+					printf("j=%d\nk=%d\nc=%d\nF	%d,%d,%d\nC	%d,%d,%d\n", j, k, c, s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
+
+				// 	// line = ft_strchr(line, ',');
+				// 	// printf("2-|%s|\n",line);
+					j = 0;
+
+				}
+				else if (c == 2){
+					printf("|%s|\n",line);
+					printf("|%s| - |%c|\n",line + i - j, *(line + i - j));
+					s->txtr->f[c++] = (unsigned int)ft_atoi(line++ + i - j);
+					printf("|%s|\n",line);
+					printf("j=%d\nk=%d\nc=%d\nF	%d,%d,%d\nC	%d,%d,%d\n", j, k, c, s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
+
+				}
+				i++;
+				j++;
+				usleep(100000);
+			}
+			// s->txtr->f = check_color_fc(line, s, F);
+			// s->txtr->f[0] = ft_atoi(line);
+
+			// printf("3-|%s|\n",line);
+			// printf("----\nF	%d,%d,%d\nC	%d,%d,%d\n----\n", s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
+			// line = ft_strchr(line, ',');
+			// printf("4-|%s|\n",line);
+			// *s->txtr->f = *ft_split(line, ',');
+		}
+		else if (!ft_strncmp(line, "C", 2) && line++)
+		{
+			// s->txtr->c = check_color_fc(line, s, C);
+
+		}
+
+		
+		if (s->txtr)
+			printf("----\nF	%d,%d,%d\nC	%d,%d,%d\n----\n", s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
+		printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+		sleep(1);
+
+		if (s->f ^ mask)
+			return (1);
+	}	
+	printf("Check color <-\n");
 	return (0);
 }
 
@@ -16,7 +106,7 @@ printf("|%s|\n",line);
 		return (NULL);
 	int i = 0;
 	while (*(line + 2 + i) && (ft_isalnum(*(line + 2 + i)) || *(line + 2 + i) == '/' || *(line + 2 + i) == '_' || *(line + 2 + i) == '.')) {
-printf("%2d|->	|%c|\n", i + 1, *(line + 2 + i));
+// printf("%2d|->	|%c|\n", i + 1, *(line + 2 + i));
 		if (*(line + 2 + i) == '.')
 		{
 			if (!((!ft_strncmp(line + 2 + i, ".png", 4) || !ft_strncmp(line + 2 + i, ".xmp", 4)) && ft_strlen(line + 2 + i) == 4))
@@ -29,16 +119,16 @@ printf("%2d|->	|%c|\n", i + 1, *(line + 2 + i));
 	if (ft_strchr(line + 2, '.') == NULL || ft_strlen(line + 2 + i))
 		ft_exit("Incorrect path!", 1);
 	s->f |= mask;
-	if (open(ft_substr(line, 0, i + 2), O_RDONLY) == -1)
-		ft_exit(strerror(errno), 1);
+	// if (open(ft_substr(line, 0, i + 2), O_RDONLY) == -1)
+	// 	ft_exit(strerror(errno), 1);
 	return (ft_substr(line, 0, i + 2));
 }
 
 int	check_texture(char *line, t_data *s)
 {
 	printf("Check textures ->\n");
-	// printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-	while (*line)
+	printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+	if (*line)
 	{
 		while (*line == ' ' || *line == '\t')
 			line++;
@@ -68,13 +158,13 @@ int	check_texture(char *line, t_data *s)
 		printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
 		sleep(1);
 
-		if (s->f & mask)
+		if (s->f ^ mask)
 			return (1);
 	}
 		// if (s->txtr)
 		// 	printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
 		// printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-		// printf("Check textures <-\n");
+		printf("Check textures <-\n");
 		return (0);
 
 }
@@ -109,7 +199,7 @@ int	check_resolution(char *line, t_data *s)
 						line++;
 			}
 		}
-		printf("rslt:	line:	%s	h=%d	w=%d\n", line, s->rslt->height, s->rslt->width);
+		// printf("rslt:	line:	%s	h=%d	w=%d\n", line, s->rslt->height, s->rslt->width);
 		printf("Check resolution <-\n");
 		return (1);
 	}
@@ -139,17 +229,21 @@ int main(int ac, char **av) {
 		ret_gnl = get_next_line(fd, &line);
 		printf("strlen: %zu\n", ft_strlen(line));
 
-		if (check_resolution(line, &s))
-			continue ;
-		if (check_texture(line, &s))
-			continue ;
+		printf("|%s|\n",line);
+		line = ft_strtrim(line, " ");
+		printf("|%s|\n",line);
+
+		// if (check_resolution(line, &s))
+		// 	continue ;
+		// if (check_texture(line, &s))
+		// 	continue ;
 		if (check_color(line, &s))
 			continue ;
 
 		// free(line);
 		// line = NULL;
 
-		printf("<=	End!\n\n");
+		printf("<=	End!\n\n\n");
 		sleep(1);
 	}
     return (0);
