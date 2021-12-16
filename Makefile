@@ -16,7 +16,7 @@ HEADER				:= 	$(INCLUDES)*.h
 
 VPATH				:=	$(SRCS_DIRS)
 SRCS_DIRS			:=	/
-SRCS				:= 	main.c
+SRCS				:= 	main.c	parsing_input_file.c
 
 OBJS_DIR			:=	.objs/
 OBJS				:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:%.c=%.o)))

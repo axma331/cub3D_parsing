@@ -1,4 +1,12 @@
-#include "Includes/cub3d.h"
+#include "Includes/cub3d.h" /* Удалить указание папки!*/
+
+int	 check_map(char *line, t_data *s, int mask)
+{
+	(void)line;
+	(void)s;
+	(void)mask;
+	return (0);
+}
 
 unsigned int	 check_color_fc(char *line, t_data *s, int mask)
 {
@@ -111,87 +119,87 @@ printf("|%s|\n",line);
 	return (ft_substr(line, 0, i + 2));
 }
 
-int	check_texture(char *line, t_data *s)
-{
-	printf("Check textures ->\n");
-	printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-	if (*line)
-	{
-		while (*line == ' ' || *line == '\t')
-			line++;
-		if (*line && !(s->f >= NO))
-		{
-			s->txtr = (t_textures *)ft_calloc(1, sizeof(t_textures));
-			if (!(s->txtr))
-				ft_exit(strerror(errno), 1);
-			printf("Memory allocation\n");
-		}
-		int mask;
-		mask = s->f;
+// int	check_texture(char *line, t_data *s)
+// {
+// 	printf("Check textures ->\n");
+// 	printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+// 	if (*line)
+// 	{
+// 		while (*line == ' ' || *line == '\t')
+// 			line++;
+// 		if (*line && !(s->f >= NO))
+// 		{
+// 			s->txtr = (t_textures *)ft_calloc(1, sizeof(t_textures));
+// 			if (!(s->txtr))
+// 				ft_exit(strerror(errno), 1);
+// 			printf("Memory allocation\n");
+// 		}
+// 		int mask;
+// 		mask = s->f;
 
-		if (!ft_strncmp(line, "NO",  2) && (line += 2))
-			s->txtr->no = check_path(line, s, NO);
-		else if (!ft_strncmp(line, "SO", 2) && (line += 2))
-			s->txtr->so = check_path(line, s, SO);
-		else if (!ft_strncmp(line, "WE", 2) && (line += 2))
-			s->txtr->we = check_path(line, s, WE);
-		else if (!ft_strncmp(line, "EA", 2) && (line += 2))
-			s->txtr->ea = check_path(line, s, EA);
-		else if (!ft_strncmp(line, "S", 1) && line++)
-			s->txtr->s = check_path(line, s, S);
+// 		if (!ft_strncmp(line, "NO",  2) && (line += 2))
+// 			s->txtr->no = check_path(line, s, NO);
+// 		else if (!ft_strncmp(line, "SO", 2) && (line += 2))
+// 			s->txtr->so = check_path(line, s, SO);
+// 		else if (!ft_strncmp(line, "WE", 2) && (line += 2))
+// 			s->txtr->we = check_path(line, s, WE);
+// 		else if (!ft_strncmp(line, "EA", 2) && (line += 2))
+// 			s->txtr->ea = check_path(line, s, EA);
+// 		else if (!ft_strncmp(line, "S", 1) && line++)
+// 			s->txtr->s = check_path(line, s, S);
 		
-		if (s->txtr)
-			printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
-		printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-		sleep(1);
+// 		if (s->txtr)
+// 			printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
+// 		printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+// 		sleep(1);
 
-		if (s->f ^ mask)
-			return (1);
-	}
-		// if (s->txtr)
-		// 	printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
-		// printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
-		printf("Check textures <-\n");
-		return (0);
+// 		if (s->f ^ mask)
+// 			return (1);
+// 	}
+// 		// if (s->txtr)
+// 		// 	printf("----\nNO\t%s\nSO\t%s\nWE\t%s\nEA\t%s\nS\t%s\n----\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
+// 		// printf("slen: %d	line:	|%s|	f = %d\n", (int)ft_strlen(line), line, s->f);
+// 		printf("Check textures <-\n");
+// 		return (0);
 
-}
+// }
 
-int	check_resolution(char *line, t_data *s)
-{
-	if (!(s->f & R))
-	{
-		printf("Check resolution ->\n");
-		s->rslt = (t_resolution *)ft_calloc(1, sizeof(t_resolution));
-		if (!(s->rslt))
-			ft_exit(strerror(errno), 1);
-		while (*line)
-		{
-			while (*line == ' ' || *line == '\t')
-				line++;
-			if (*line == 'R' && line++)
-			{
-				if (s->f & R)
-					ft_exit("Incorrect parameters!", 1);
-				s->f |= R;
-			}
-			if (ft_isalpha(*line) || *line == '-' || (ft_isdigit(*line) && s->rslt->height && s->rslt->width))
-				ft_exit("Incorrect resolution!", 1);
-			if (ft_isdigit(*line) && (s->f & R))
-			{
-				if (!s->rslt->height)
-					s->rslt->height = atoi(line);
-				else if (!s->rslt->width)
-					s->rslt->width = atoi(line);
-				while (ft_isdigit(*line))
-						line++;
-			}
-		}
-		// printf("rslt:	line:	%s	h=%d	w=%d\n", line, s->rslt->height, s->rslt->width);
-		printf("Check resolution <-\n");
-		return (1);
-	}
-	return (0);
-}
+// int	check_resolution(char *line, t_data *s)
+// {
+// 	if (!(s->f & R))
+// 	{
+// 		printf("Check resolution ->\n");
+// 		s->rslt = (t_resolution *)ft_calloc(1, sizeof(t_resolution));
+// 		if (!(s->rslt))
+// 			ft_exit(strerror(errno), 1);
+// 		while (*line)
+// 		{
+// 			while (*line == ' ' || *line == '\t')
+// 				line++;
+// 			if (*line == 'R' && line++)
+// 			{
+// 				if (s->f & R)
+// 					ft_exit("Incorrect parameters!", 1);
+// 				s->f |= R;
+// 			}
+// 			if (ft_isalpha(*line) || *line == '-' || (ft_isdigit(*line) && s->rslt->height && s->rslt->width))
+// 				ft_exit("Incorrect resolution!", 1);
+// 			if (ft_isdigit(*line) && (s->f & R))
+// 			{
+// 				if (!s->rslt->height)
+// 					s->rslt->height = atoi(line);
+// 				else if (!s->rslt->width)
+// 					s->rslt->width = atoi(line);
+// 				while (ft_isdigit(*line))
+// 						line++;
+// 			}
+// 		}
+// 		// printf("rslt:	line:	%s	h=%d	w=%d\n", line, s->rslt->height, s->rslt->width);
+// 		printf("Check resolution <-\n");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
 int main(int ac, char **av) {
 	t_data	s;
@@ -214,16 +222,15 @@ int main(int ac, char **av) {
 	{
 		printf("=>	Start:\n");
 		ret_gnl = get_next_line(fd, &line);
-		// printf("strlen: %zu\n", ft_strlen(line));
 
-		printf("|%s|\n",line);
-		line = ft_strtrim(line, " ");
-		// printf("|%s|\n",line);
+		while (*line == ' ' || *line == '\t')
+			line++;
 
-		// if (check_resolution(line, &s))
-		// 	continue ;
-		// if (check_texture(line, &s))
-		// 	continue ;
+		printf("1 -|%s|    f = %d\n",line, s.f);
+		if ( *line == 'R' && check_resolution(++line, &s))
+			continue ;
+		if (check_texture(line, &s))
+			continue ;
 		if (check_color(line, &s))
 			continue ;
 
