@@ -1,14 +1,13 @@
-R 1920 1080
-R 1920 1080
+  			  R	 1920 1080 		 
 
-NO ./path_to_the_north_texture.xmp
-SO ./path_to_the_south_texture.xmp
-WE ./path_to_the_west_texture.xmp
-EA ./path_to_the_east_texture.xmp
-S ./path_to_the_sprite_texture.xmp
+NO ./path_to_the_north_texture1.xmp
+SO ./path_to_the_south_texture2.xmp
+WE ./path_to_the_west_texture3.xmp
+EA ./path_to_the_east_texture4.xmp
+S ./path_to_the_sprite_texture5.xmp
 
 F 220,  100,0
-C 225,30,0
+C 225,256,0
 
         1111111111111111111111111
         1000000000110000000000001

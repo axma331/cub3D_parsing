@@ -31,8 +31,8 @@ typedef struct	s_player
 
 typedef struct	s_resolution
 {
-	unsigned int	height;
-	unsigned int 	width;
+	int				height;
+	int				width;
 }				t_resolution;
 
 typedef struct	s_textures
@@ -56,8 +56,9 @@ typedef struct s_data
 
 }				t_data;
 
-int	check_resolution(char *line, t_data *s);
-int	check_texture(char *line, t_data *s);
+int		check_resolution(char *line, t_data *s);
+int		check_texture(char *line, t_data *s);
 char	*check_path(char *line, t_data *s, int mask);
+int		check_extension(const char* line, const char* ext);
 
 #endif
