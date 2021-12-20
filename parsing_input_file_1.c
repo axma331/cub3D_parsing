@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_input_file.c                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 15:42:11 by feschall          #+#    #+#             */
-/*   Updated: 2021/12/16 16:25:22 by feschall         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Includes/cub3d.h"
 
 static int	check_resolution_values(t_data *s, int max_h, int max_w)
@@ -22,6 +10,8 @@ static int	check_resolution_values(t_data *s, int max_h, int max_w)
 
 int	check_resolution(char *line, t_data *s)
 {
+	if (!*line)
+		ft_exit("Empty variables!", 1);
 	if (s->f & R)
 		ft_exit("Recurring variables!", 1);
 	s->rslt = (t_resolution *)ft_calloc(1, sizeof(t_resolution));
@@ -74,6 +64,10 @@ char	*check_path(char *line, t_data *s, int mask)
 	int	i;
 
 	i = 0;
+	if (!*line)
+		ft_exit("Empty variables!", 1);
+	if (s->f & mask)
+		ft_exit("Recurring variables!", 1);
 	while (*line && (*line == ' ' || *line == '\t'))
 		if (++line && !ft_strncmp(line, "./", 2))
 			i = 2;
@@ -110,6 +104,10 @@ int	check_texture(char *line, t_data *s)
 		s->txtr->ea = check_path(++line, s, EA);
 	else if (!ft_strncmp(line, "S", 1))
 		s->txtr->s = check_path(++line, s, S);
+	else if (!ft_strncmp(line, "F",  1) && line++)		
+		check_color(line, s, F);
+	else if (!ft_strncmp(line, "C", 1) && line++)
+		check_color(line, s, C);
 	if (s->f ^ mask)
 		return (true);
 	return (false);

@@ -42,8 +42,8 @@ typedef struct	s_textures
 	char			*we;
 	char			*ea;
 	char			*s;
-	unsigned int	f[3];
-	unsigned int	c[3];
+	int	f[3];
+	int	c[3];
 }				t_textures;
 
 typedef struct s_data
@@ -60,5 +60,6 @@ int		check_resolution(char *line, t_data *s);
 int		check_texture(char *line, t_data *s);
 char	*check_path(char *line, t_data *s, int mask);
 int		check_extension(const char* line, const char* ext);
+void	check_color(char *line, t_data *s, int mask);
 
 #endif
