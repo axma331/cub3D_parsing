@@ -18,7 +18,7 @@
 # define	F	0b01000000
 # define	C	0b10000000
 
-typedef struct	s_player
+typedef struct		s_player
 {
 	unsigned int	x;			//положение игрок на карте по горизонтали
 	unsigned int	y;			//положение игрок на карте по вертикали
@@ -27,15 +27,16 @@ typedef struct	s_player
 	int				fov;		//field of view (поле зрения)
 	bool			in_zone;	//Расположение в границах карты
 	bool			hit_wall;	//Ударился об стенку
-}				t_player;
+}					t_player;
 
-typedef struct	s_resolution
+typedef struct		s_resolution
 {
 	int				height;
 	int				width;
-}				t_resolution;
+}					t_resolution;
 
-typedef struct	s_textures
+
+typedef struct		s_textures
 {
 	char			*no;
 	char			*so;
@@ -44,22 +45,32 @@ typedef struct	s_textures
 	char			*s;
 	int	f[3];
 	int	c[3];
-}				t_textures;
+}					t_textures;
 
-typedef struct s_data
+typedef struct		s_temporary
+{
+	char			**mass;
+	int				line;
+	int				cnt;
+	int				t3;
+}					t_temporary;
+
+typedef struct 		s_data
 {
 	t_resolution	*rslt;
 	t_textures		*txtr;
 	t_player		*plyr;
 	char			**map;
 	unsigned char 	f;
+	t_temporary		t;
+}					t_data;
 
-}				t_data;
 
 int		check_resolution(char *line, t_data *s);
 int		check_texture(char *line, t_data *s);
 char	*check_path(char *line, t_data *s, int mask);
 int		check_extension(const char* line, const char* ext);
 void	check_color(char *line, t_data *s, int mask);
+void	check_map(char *line, t_data *s);
 
 #endif

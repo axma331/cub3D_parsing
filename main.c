@@ -21,19 +21,22 @@ int main(int ac, char **av) {
 		ret_gnl = get_next_line(fd, &line);
 		printf("\tline:\t|%s|\t f = %d\tl = %d\n", line, s.f, (int)ft_strlen(line));
 
-		if (ret_gnl && s.f <= 254 )
+		if (s.f <= 254 ) {
 			line = ft_strtrim(line, "\t ");
-		if (s.rslt)
-			printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
-		if (s.txtr){
-			printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s.txtr->no, s.txtr->so, s.txtr->we, s.txtr->ea, s.txtr->s);
-			printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s.txtr->f[0], s.txtr->f[1], s.txtr->f[2], s.txtr->c[0], s.txtr->c[1], s.txtr->c[2]);}
-		sleep(1);
+			if (s.rslt)
+				printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
+			if (s.txtr){
+				printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s.txtr->no, s.txtr->so, s.txtr->we, s.txtr->ea, s.txtr->s);
+				printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s.txtr->f[0], s.txtr->f[1], s.txtr->f[2], s.txtr->c[0], s.txtr->c[1], s.txtr->c[2]);}
+			sleep(1);
 
-		if ( *(line + 1) && *line == 'R' && check_resolution(++line, &s))
-			continue ;
-		if (check_texture(line, &s))
-			continue ;
+			if ( *(line + 1) && *line == 'R' && check_resolution(++line, &s))
+				continue ;
+			if (check_texture(line, &s))
+				continue ;
+		}
+		check_map(line, &s);
+
 
 		printf("\033[33m<= End!\n\n\033[0m");
 	}

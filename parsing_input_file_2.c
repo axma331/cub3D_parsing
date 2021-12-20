@@ -47,10 +47,25 @@ void	 check_color(char *line, t_data *s, int mask)
 	s->f |= mask;
 }
 
-// int	 check_map(char *line, t_data *s, int mask)
-// {
-// 	(void)line;
-// 	(void)s;
-// 	(void)mask;
-// 	return (0);
-// }
+void	 check_map(char *line, t_data *s)
+{
+	printf("\033[36m=> map\033[0m\n");
+	// s->t.mass = (char **)ft_calloc(1, sizeof(char *));
+	// if (!(s->t.mass))
+	// 	ft_exit(strerror(errno), 1);
+	s->t.mass = s->map;
+	s->map[s->t.line++] = line; printf("s.l = %d\n", s->t.line);
+	s->t.mass = s->map;
+	s->map = (char **)ft_calloc(2 + s->t.line , sizeof(char *));
+	if (!(s->rslt))
+		ft_exit(strerror(errno), 1);
+	s->t.cnt = -1;
+	while (++s->t.cnt)
+		s->map[s->t.cnt] = s->t.mass[s->t.cnt];
+	free(s->t.mass);
+
+
+	printf("\tm\t%s\n",*s->map);
+	sleep(1);
+	printf("\033[36m<= map\033[0m\n");
+}
