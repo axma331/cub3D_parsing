@@ -15,7 +15,7 @@ INCLUDES			:= 	includes/
 HEADER				:= 	$(INCLUDES)*.h
 
 VPATH				:=	$(SRCS_DIRS)
-SRCS_DIRS			:=	/
+SRCS_DIRS			:=	
 SRCS				:= 	main.c	parsing_input_file.c
 
 OBJS_DIR			:=	.objs/
@@ -40,11 +40,13 @@ fclean:				clean
 					make fclean -C $(LIBFT_DIR)
 					$(RM) $(NAME)
 					$(RM) .gitpush
+					$(RM) $(INCLUDES)libft.h
 
 re:					fclean all
 
 libft_make:
 					@make -C $(LIBFT_DIR)
+					@cp $(LIBFT_DIR)*.h $(INCLUDES)
 
 norme:
 					norminette $(NORM) $(SRCS)*.c $(INCLUDES)*.h

@@ -7,7 +7,7 @@ EA ./path_to_the_east_texture4.xmp
 S ./path_to_the_sprite_texture5.xmp
 
 F 220,  100,0
-C 225,256,0
+C 225,255,0
 
         1111111111111111111111111
         1000000000110000000000001
