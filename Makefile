@@ -15,7 +15,7 @@ INCLUDES			:= 	includes/
 HEADER				:= 	$(INCLUDES)*.h
 
 VPATH				:=	$(SRCS_DIRS)
-SRCS_DIRS			:=	
+SRCS_DIRS			:=	./
 SRCS				:= 	main.c	parsing_input_file_1.c parsing_input_file_2.c
 
 OBJS_DIR			:=	.objs/
@@ -25,7 +25,7 @@ all:				libft_make $(NAME)
 
 
 $(NAME):			$(OBJS_DIR) $(OBJS) $(LIBFT) Makefile
-					$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $@
+					$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@
 
 $(OBJS_DIR)%.o:		%.c $(HEADER)
 					$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@

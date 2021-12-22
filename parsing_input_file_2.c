@@ -49,23 +49,26 @@ void	 check_color(char *line, t_data *s, int mask)
 
 void	 check_map(char *line, t_data *s)
 {
-	printf("\033[36m=> map\033[0m\n");
-	// s->t.mass = (char **)ft_calloc(1, sizeof(char *));
-	// if (!(s->t.mass))
-	// 	ft_exit(strerror(errno), 1);
+	int i;
+	
+	i = 0;
+	while (line[i] == ' ' || line[i] == '\t' || !line[0])
+		if (!line[++i])
+		{
+			if(*s->map)
+				ft_exit("incorrect map!", 1);
+			return ;
+		}
+	if (line[i] != '1' || line[ft_strlen(line) - 1] != '1')
+		ft_exit("incorrect map borders!", 1);
+		
+	s->map[s->t.lines_cnt++] = line;
 	s->t.mass = s->map;
-	s->map[s->t.line++] = line; printf("s.l = %d\n", s->t.line);
-	s->t.mass = s->map;
-	s->map = (char **)ft_calloc(2 + s->t.line , sizeof(char *));
-	if (!(s->rslt))
+	s->map = (char **)ft_calloc(1 + s->t.lines_cnt, sizeof(char *));
+	if (!s->map)
 		ft_exit(strerror(errno), 1);
-	s->t.cnt = -1;
-	while (++s->t.cnt)
-		s->map[s->t.cnt] = s->t.mass[s->t.cnt];
+	i = -1;
+	while (++i < s->t.lines_cnt)
+		s->map[i] = s->t.mass[i];
 	free(s->t.mass);
-
-
-	printf("\tm\t%s\n",*s->map);
-	sleep(1);
-	printf("\033[36m<= map\033[0m\n");
 }

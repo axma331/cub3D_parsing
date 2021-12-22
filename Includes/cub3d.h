@@ -14,9 +14,9 @@
 # define	SO	0b00000100
 # define	WE	0b00001000
 # define	EA	0b00010000
-# define	S	0b00100000
-# define	F	0b01000000
-# define	C	0b10000000
+# define	F	0b00100000
+# define	C	0b01000000
+# define	S	0b10000000
 
 typedef struct		s_player
 {
@@ -47,13 +47,11 @@ typedef struct		s_textures
 	int	c[3];
 }					t_textures;
 
-typedef struct		s_temporary
+typedef struct		s_temp
 {
 	char			**mass;
-	int				line;
-	int				cnt;
-	int				t3;
-}					t_temporary;
+	int				lines_cnt;
+}					t_temp;
 
 typedef struct 		s_data
 {
@@ -62,7 +60,7 @@ typedef struct 		s_data
 	t_player		*plyr;
 	char			**map;
 	unsigned char 	f;
-	t_temporary		t;
+	t_temp			t;
 }					t_data;
 
 
