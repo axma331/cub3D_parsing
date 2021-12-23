@@ -11,7 +11,7 @@ NORM				:= 	-R CheckForbiddenSourceHeader
 LIBFT_DIR			:= 	../libft/
 LIBFT				:= 	$(LIBFT_DIR)libft.a
 
-INCLUDES			:= 	includes/
+INCLUDES			:= 	Includes/
 HEADER				:= 	$(INCLUDES)*.h
 
 VPATH				:=	$(SRCS_DIRS)
@@ -46,7 +46,7 @@ re:					fclean all
 
 libft_make:
 					@make -C $(LIBFT_DIR)
-					@cp $(LIBFT_DIR)*.h $(INCLUDES)
+					cp $(LIBFT_DIR)*.h $(INCLUDES)
 
 norme:
 					norminette $(NORM) $(SRCS)*.c $(INCLUDES)*.h

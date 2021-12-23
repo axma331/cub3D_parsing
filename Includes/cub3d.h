@@ -9,6 +9,8 @@
 # include <errno.h>
 # include <stdbool.h>
 
+
+
 # define	R	0b00000001
 # define	NO	0b00000010
 # define	SO	0b00000100
@@ -64,11 +66,13 @@ typedef struct 		s_data
 }					t_data;
 
 
-int		check_resolution(char *line, t_data *s);
-int		check_texture(char *line, t_data *s);
+int		init_resolution(char *line, t_data *s);
+int		init_texture(char *line, t_data *s);
 char	*check_path(char *line, t_data *s, int mask);
 int		check_extension(const char* line, const char* ext);
 void	check_color(char *line, t_data *s, int mask);
-void	check_map(char *line, t_data *s);
+void	init_map(char *line, t_data *s);
+void	check_map(t_data *s);
+
 
 #endif

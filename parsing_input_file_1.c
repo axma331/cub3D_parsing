@@ -8,7 +8,7 @@ static int	check_resolution_values(t_data *s, int max_h, int max_w)
 	return (true);
 }
 
-int	check_resolution(char *line, t_data *s)
+int	init_resolution(char *line, t_data *s)
 {
 	if (!*line)
 		ft_exit("Empty variables!", 1);
@@ -85,7 +85,7 @@ char	*check_path(char *line, t_data *s, int mask)
 	return (ft_substr(line, 0, ft_strlen(line)));
 }
 
-int	check_texture(char *line, t_data *s)
+int	init_texture(char *line, t_data *s)
 {
 	int	mask;
 

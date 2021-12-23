@@ -47,7 +47,7 @@ void	 check_color(char *line, t_data *s, int mask)
 	s->f |= mask;
 }
 
-void	 check_map(char *line, t_data *s)
+void	 init_map(char *line, t_data *s)
 {
 	int i;
 	
@@ -71,4 +71,11 @@ void	 check_map(char *line, t_data *s)
 	while (++i < s->t.lines_cnt)
 		s->map[i] = s->t.mass[i];
 	free(s->t.mass);
+}
+
+void check_map(t_data *s)
+{
+	int i = -1;
+	while (s->map[++i])
+		printf("\tmap[%d]\t|%s|\n", i, s->map[i]);
 }
