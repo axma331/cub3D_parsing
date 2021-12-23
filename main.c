@@ -18,9 +18,9 @@ int main(int ac, char **av) {
 	s.map = (char **)ft_calloc(2, sizeof(char *));
 	while (ret_gnl)
 	{
-		printf("\033[32m=> Start:\033[0m\n");
+		// printf("\033[32m=> Start:\033[0m\n");
 		ret_gnl = get_next_line(fd, &line);
-		printf("\tline:\t|%s|\t f = %d\tl = %d\n", line, s.f, (int)ft_strlen(line));
+		// printf("\tline:\t|%s|\t f = %d\tl = %d\n", line, s.f, (int)ft_strlen(line));
 
 		if (s.f < 128)
 		{
@@ -35,7 +35,7 @@ int main(int ac, char **av) {
 		else
 			init_map(line, &s);
 
-		printf("\033[33m<= End!\n\n\033[0m");
+		// printf("\033[33m<= End!\n\n\033[0m");
 	}
 	if (!ret_gnl)
 		check_map(&s);

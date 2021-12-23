@@ -80,17 +80,42 @@ void check_map(t_data *s)
 	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
 	{
 		printf("\tmap[%d]\t|%s|\n", y, s->map[y]);
-		int x = -1;
-		while (s->map[y][++x] == ' ')
-			printf("|%c|\n", s->map[y][x]);
-		while ((!y || y == s->t.lines_cnt - 1) && s->map[y] && s->map[y][++x])
-			if (s->map[y][x] != '1')
-				ft_exit("incorrect first maps line", 1);
-		
+		int x = 0;
+		while (s->map[y][x] == ' ')
+			x++;
+		while ((!y || y == s->t.lines_cnt - 1) && s->map[y] && s->map[y][x])
+		{
+			// printf("|%c|\n", s->map[y][x]);
+			if (!(s->map[y][x] == '1' || s->map[y][x] == ' ') && x++)
+				ft_exit("incorrect first/last line of the map!", 1);
+			x++;
+		}
+		while (s->map[y] && s->map[y][x])
+		{
+			printf("|%d||%d|\t|%c|\n", y, x, s->map[y][x]);
+			if (s->map[y][x] == '0' && !(s->map[y - 1][x] != ' ' && s->map[y + 1][x] != ' '
+				&& s->map[y][x - 1] != ' ' && s->map[y][x + 1] != ' ')) {
+				printf("Error!\nn");
+				return ;
+			}
+			if (s->map[y][x] == ' ' &&  s->map[y][x + 1] == '1' && s->map[y + 1][x] == '1'
+				&& s->map[y + 1][x + 1] != '1') {
+				printf("Error! -->|%c|\n", s->map[y + 1][x + 1]);
+				return ;
+				}
+				if (s->map[y][x] == ' ' &&  s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1'
+				&& s->map[y + 1][x - 1] != '1') {
+				printf("Error!! -->|%c|\n", s->map[y + 1][x + 1]);
+				return ;
+				}
 
-
-
-
+				// if (s->map[y][x] == '0' &&  s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1'
+				// && s->map[y + 1][x - 1] != '1') {
+				// printf("Error!! -->|%c|\n", s->map[y + 1][x + 1]);
+				// return ;
+				// }
+			x++;
+		}
 
 	}
 
