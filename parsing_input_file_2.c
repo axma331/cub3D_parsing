@@ -98,24 +98,42 @@ void check_map(t_data *s)
 				printf("Error!\nn");
 				return ;
 			}
-			if (s->map[y][x] == ' ' &&  s->map[y][x + 1] == '1' && s->map[y + 1][x] == '1'
+			if (s->map[y][x] == ' ' && s->map[y + 1][x] == '1' && s->map[y][x + 1] == '1'
 				&& s->map[y + 1][x + 1] != '1') {
 				printf("Error! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;
-				}
-				if (s->map[y][x] == ' ' &&  s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1'
+				return ;}
+			if (s->map[y][x] == ' ' && s->map[y + 1][x] == '1' && s->map[y][x - 1] == '1'
 				&& s->map[y + 1][x - 1] != '1') {
 				printf("Error!! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;
-				}
+				return ;}
 
-				// if (s->map[y][x] == '0' &&  s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1'
-				// && s->map[y + 1][x - 1] != '1') {
-				// printf("Error!! -->|%c|\n", s->map[y + 1][x + 1]);
-				// return ;
-				// }
+			if (s->map[y][x] == '0' &&  s->map[y][x + 1] == '1' && s->map[y + 1][x] == '1'
+				&& s->map[y + 1][x + 1] == ' ') {
+				printf("Error!!! -->|%c|\n", s->map[y + 1][x + 1]);
+				return ;}
+			if (s->map[y][x] == '0' &&  s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1'
+				&& s->map[y + 1][x - 1] == ' ') {
+				printf("Error!!!! -->|%c|\n", s->map[y + 1][x + 1]);
+				return ;}
+
+			
+			if (y && s->map[y][x] == '0' &&  s->map[y][x + 1] == '1' && s->map[y - 1][x] == '1'
+				&& s->map[y - 1][x + 1] == ' ') {
+				printf("Error!!! -->|%c|\n", s->map[y + 1][x + 1]);
+				return ;}
+			if (y && s->map[y][x] == '0' &&  s->map[y][x - 1] == '1' && s->map[y - 1][x] == '1'
+				&& s->map[y - 1][x - 1] == ' ') {
+				printf("Error!!!! -->|%c|\n", s->map[y + 1][x + 1]);
+				return ;}
+
+
+			// if (y && (s->map[y - 1][x] == ' ' || !s->map[y - 1][x]) && !(s->map[y][x] != '1') {
+			// 	printf("Error5! -->|%c|\n", s->map[y][x]);
+			// 	return ;}
+			
 			x++;
 		}
+
 
 	}
 
