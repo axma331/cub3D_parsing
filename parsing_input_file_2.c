@@ -75,7 +75,24 @@ void	 init_map(char *line, t_data *s)
 
 void check_map(t_data *s)
 {
-	int i = -1;
-	while (s->map[++i])
-		printf("\tmap[%d]\t|%s|\n", i, s->map[i]);
+	int y = -1;
+
+	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
+	{
+		printf("\tmap[%d]\t|%s|\n", y, s->map[y]);
+		int x = -1;
+		while (s->map[y][++x] == ' ')
+			printf("|%c|\n", s->map[y][x]);
+		while ((!y || y == s->t.lines_cnt - 1) && s->map[y] && s->map[y][++x])
+			if (s->map[y][x] != '1')
+				ft_exit("incorrect first maps line", 1);
+		
+
+
+
+
+
+	}
+
+
 }

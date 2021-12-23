@@ -39,14 +39,14 @@ int main(int ac, char **av) {
 	}
 	if (!ret_gnl)
 		check_map(&s);
-	if (s.rslt)
-		printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
-	if (s.txtr){
-		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s.txtr->no, s.txtr->so, s.txtr->we, s.txtr->ea, s.txtr->s);
-		printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s.txtr->f[0], s.txtr->f[1], s.txtr->f[2], s.txtr->c[0], s.txtr->c[1], s.txtr->c[2]);}
-	int i = -1;
-	while (s.map[++i])
-		printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
+	// if (s.rslt)
+	// 	printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
+	// if (s.txtr){
+	// 	printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s.txtr->no, s.txtr->so, s.txtr->we, s.txtr->ea, s.txtr->s);
+	// 	printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s.txtr->f[0], s.txtr->f[1], s.txtr->f[2], s.txtr->c[0], s.txtr->c[1], s.txtr->c[2]);}
+	// int i = -1;
+	// while (s.map[++i])
+	// 	printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
 	// printf("\tmap[%d]\t|%s|\n", i, *s.map);
 
     return (0);
