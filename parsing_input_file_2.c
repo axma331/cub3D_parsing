@@ -73,7 +73,7 @@ void	 init_map(char *line, t_data *s)
 	free(s->t.mass);
 }
 
-void check_map(t_data *s)
+void check_map(t_data *s) /* Добавить возможность подстановки подстановки символа вместо '0'*/
 {
 	int y = -1;
 
