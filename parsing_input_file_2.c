@@ -59,7 +59,7 @@ void	 init_map(char *line, t_data *s)
 				ft_exit("incorrect map!", 1);
 			return ;
 		}
-	if (line[i] != '1' || line[ft_strlen(line) - 1] != '1')
+	if (line[i] != '1' /*|| line[ft_strlen(line) - 1] != '1'*/)
 		ft_exit("incorrect map borders!", 1);
 		
 	s->map[s->t.lines_cnt++] = line;
@@ -83,59 +83,27 @@ void check_map(t_data *s)
 		int x = 0;
 		while (s->map[y][x] == ' ')
 			x++;
-		while ((!y || y == s->t.lines_cnt - 1) && s->map[y] && s->map[y][x])
+		while ((!y || y == s->t.lines_cnt - 1) && s->map[y][x])
 		{
-			// printf("|%c|\n", s->map[y][x]);
-			if (!(s->map[y][x] == '1' || s->map[y][x] == ' ') && x++)
+			printf("|%c|\n", s->map[y][x]);
+			if (!(s->map[y][x] == '1' || s->map[y][x] == ' '))
 				ft_exit("incorrect first/last line of the map!", 1);
 			x++;
 		}
 		while (s->map[y] && s->map[y][x])
 		{
 			printf("|%d||%d|\t|%c|\n", y, x, s->map[y][x]);
-			if (s->map[y][x] == '0' && !(s->map[y - 1][x] != ' ' && s->map[y + 1][x] != ' '
-				&& s->map[y][x - 1] != ' ' && s->map[y][x + 1] != ' ')) {
-				printf("Error!\nn");
+			if (s->map[y][x] == '0'
+				&& (!((y && s->map[y - 1][x] != ' ') && (s->map[y + 1] && s->map[y + 1][x] && (s->map[y + 1][x] != ' ' || !s->map[y + 1][x])) && s->map[y][x - 1] != ' ' && (s->map[y][x + 1] != ' ' || !s->map[y][x + 1]) && s->map[y][x + 1])
+				|| (s->map[y][x + 1] == '1' && s->map[y + 1][x] == '1' && (s->map[y + 1][x + 1] == ' ' || !s->map[y + 1][x + 1]))
+				|| (s->map[y][x + 1] == '1' && s->map[y - 1][x] == '1' && (s->map[y - 1][x + 1] == ' ' || !s->map[y - 1][x + 1]))
+				|| (s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1' && (s->map[y + 1][x - 1] == ' ' || !s->map[y + 1][x - 1]))
+				|| (s->map[y][x - 1] == '1' && s->map[y - 1][x] == '1' && s->map[y - 1][x - 1] == ' ')))
+			{
+				printf("Error->|%c|\n", s->map[y - 1][x + 1]);
 				return ;
 			}
-			if (s->map[y][x] == ' ' && s->map[y + 1][x] == '1' && s->map[y][x + 1] == '1'
-				&& s->map[y + 1][x + 1] != '1') {
-				printf("Error! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;}
-			if (s->map[y][x] == ' ' && s->map[y + 1][x] == '1' && s->map[y][x - 1] == '1'
-				&& s->map[y + 1][x - 1] != '1') {
-				printf("Error!! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;}
-
-			if (s->map[y][x] == '0' &&  s->map[y][x + 1] == '1' && s->map[y + 1][x] == '1'
-				&& s->map[y + 1][x + 1] == ' ') {
-				printf("Error!!! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;}
-			if (s->map[y][x] == '0' &&  s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1'
-				&& s->map[y + 1][x - 1] == ' ') {
-				printf("Error!!!! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;}
-
-			
-			if (y && s->map[y][x] == '0' &&  s->map[y][x + 1] == '1' && s->map[y - 1][x] == '1'
-				&& s->map[y - 1][x + 1] == ' ') {
-				printf("Error!!! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;}
-			if (y && s->map[y][x] == '0' &&  s->map[y][x - 1] == '1' && s->map[y - 1][x] == '1'
-				&& s->map[y - 1][x - 1] == ' ') {
-				printf("Error!!!! -->|%c|\n", s->map[y + 1][x + 1]);
-				return ;}
-
-
-			// if (y && (s->map[y - 1][x] == ' ' || !s->map[y - 1][x]) && !(s->map[y][x] != '1') {
-			// 	printf("Error5! -->|%c|\n", s->map[y][x]);
-			// 	return ;}
-			
 			x++;
 		}
-
-
 	}
-
-
 }
