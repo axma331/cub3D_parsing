@@ -2,6 +2,7 @@
 # define CUB3D_H
 
 # include "libft.h"
+# include <mlx.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -45,8 +46,8 @@ typedef struct		s_textures
 	char			*we;
 	char			*ea;
 	char			*s;
-	int	f[3];
-	int	c[3];
+	int				f[3];
+	int				c[3];
 }					t_textures;
 
 typedef struct		s_temp
@@ -57,11 +58,13 @@ typedef struct		s_temp
 
 typedef struct 		s_data
 {
+	void			*mlx_ptr;
+	void			*win_ptr;
+	char			**map;
+	unsigned char 	f;
 	t_resolution	*rslt;
 	t_textures		*txtr;
 	t_player		*plyr;
-	char			**map;
-	unsigned char 	f;
 	t_temp			t;
 }					t_data;
 
@@ -72,7 +75,8 @@ char	*check_path(char *line, t_data *s, int mask);
 int		check_extension(const char* line, const char* ext);
 void	check_color(char *line, t_data *s, int mask);
 void	init_map(char *line, t_data *s);
-void	check_map(t_data *s);
+void	checking_boundary_symbols(t_data *s, const char c);
+void	check_player(t_data *s);
 
 
 #endif

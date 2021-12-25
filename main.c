@@ -12,9 +12,11 @@ int main(int ac, char **av) {
 		ft_exit("Invalid argument!", 1);
 	if (av[1] && !(strlen(av[1]) > 3 && !strcmp(av[1] + strlen(av[1]) - 4, ".cub")))
 		ft_exit("Incorrect map name!", 1);
+	printf("\033[33m<= End!\n\n\033[0m");
 	fd = open(av[1], O_RDONLY);
-	if (errno)
+	if (fd == -1)
 		ft_exit(strerror(errno), 1);
+	printf("\033[33m<= End!\n\n\033[0m");
 	s.map = (char **)ft_calloc(2, sizeof(char *));
 	while (ret_gnl)
 	{
@@ -38,7 +40,10 @@ int main(int ac, char **av) {
 		// printf("\033[33m<= End!\n\n\033[0m");
 	}
 	if (!ret_gnl)
-		check_map(&s);
+	{
+		checking_boundary_symbols(&s, '0');
+		check_player(&s);
+	}
 	// if (s.rslt)
 	// 	printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
 	// if (s.txtr){
@@ -48,6 +53,10 @@ int main(int ac, char **av) {
 	// while (s.map[++i])
 	// 	printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
 	// printf("\tmap[%d]\t|%s|\n", i, *s.map);
+
+	/*MLX*/
+
+	s.mlx_ptr = mlx_init();
 
     return (0);
 }
