@@ -79,13 +79,13 @@ void checking_boundary_symbols(t_data *s, const char c) /* Добавить во
 
 	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
 	{
-		printf("\tmap[%d]\t|%s|\n", y, s->map[y]);
+		// printf("\tmap[%d]\t|%s|\n", y, s->map[y]);
 		int x = 0;
 		while (s->map[y][x] == ' ')
 			x++;
 		while ((!y || y == s->t.lines_cnt - 1) && s->map[y][x])
 		{
-			printf("|%c|\n", s->map[y][x]);
+			// printf("|%c|\n", s->map[y][x]);
 			if (!(s->map[y][x] == '1' || s->map[y][x] == ' '))
 				ft_exit("incorrect first/last line of the map!", 1);
 			x++;
@@ -120,7 +120,7 @@ void check_player(t_data *s) /* Добавить возможность подс
 			s->plyr = (t_player *)ft_calloc(1, sizeof(t_player *));
 			if (!s->plyr)
 				ft_exit(strerror(errno), 1);
-			printf("|%d|\t|%s|\n", y * 100, s->map[y]);
+			// printf("|%d|\t|%s|\n", y * 100, s->map[y]);
 			/*Прописать проверху окружения для позиции используя checking_boundary_symbols*/
 			checking_boundary_symbols(s, 'N');
 		}

@@ -20,7 +20,7 @@ all: $(NAME)
 
 $(NAME): $(MODULE_OBJ) $(OBJ) $(C_OBJ)
 	swiftc $(OPTI) $(INC) -o $(NAME) -emit-library $(OBJ) $(C_OBJ) -lz
-	@echo "$(CLRCY)Создан$(CLREL) $@$(CLRRS)"
+	@echo "$(CLRCY)create$(CLREL) $@$(CLRRS)"
 
 %.o: %.swift
 	swiftc $(OPTI) $(INC) -parse-as-library -c $< -o $@

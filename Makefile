@@ -30,9 +30,10 @@ all:				libft_make mlx_make $(NAME)
 
 $(NAME):			$(OBJS_DIR) $(OBJS) $(LIBFT) $(MLXLIB) Makefile
 					$(CC) $(CFLAGS) -I $(MLXFLAGS) $(OBJS) $(LIBFT) -o $@
-					@echo "$(CLRCY)Создан$(CLREL) $@$(CLRRS)"
+					@echo "$(CLRCY)create$(CLREL) $@$(CLRRS)"
 
 $(OBJS_DIR)%.o:		%.c $(HEADER)
+					cp $(LIBFT_HED) $(INCLUDES)
 					$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
 
 $(OBJS_DIR):
@@ -53,7 +54,7 @@ re:					fclean all
 
 libft_make:
 					@make -C $(LIBFT_DIR)
-					cp $(LIBFT_HED) $(INCLUDES)
+
 mlx_make:
 					@make -C $(MLX_DIR)
 

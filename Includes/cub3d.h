@@ -38,7 +38,6 @@ typedef struct		s_resolution
 	int				width;
 }					t_resolution;
 
-
 typedef struct		s_textures
 {
 	char			*no;
@@ -56,15 +55,32 @@ typedef struct		s_temp
 	int				lines_cnt;
 }					t_temp;
 
-typedef struct 		s_data
+typedef struct		s_xpm
 {
-	void			*mlx_ptr;
+	void			*ptr;
+	char			*addr;
+	int				bpp;
+	int				ll;
+	int				endian;
+	int				w;
+	int				h;
+}					t_xpm;
+
+typedef struct		s_mlx
+{
+	void			*ptr;
 	void			*win_ptr;
+	t_xpm			*img;
+}					t_mlx;
+
+typedef struct		s_data
+{
 	char			**map;
 	unsigned char 	f;
 	t_resolution	*rslt;
 	t_textures		*txtr;
 	t_player		*plyr;
+	t_mlx			mlx;
 	t_temp			t;
 }					t_data;
 
@@ -77,6 +93,11 @@ void	check_color(char *line, t_data *s, int mask);
 void	init_map(char *line, t_data *s);
 void	checking_boundary_symbols(t_data *s, const char c);
 void	check_player(t_data *s);
+
+void	*init_mlx_img(t_data *s, char *xpm, int width, int height);
+void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color);
+void	draw_mini_map(t_data *s, t_xpm *dest, int color);
+int		create_rgb(int t, int r, int g, int b);
 
 
 #endif
