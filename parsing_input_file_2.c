@@ -50,6 +50,7 @@ void	 check_color(char *line, t_data *s, int mask)
 void	 init_map(char *line, t_data *s)
 {
 	int i;
+	int width;
 	
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t' || !line[0])
@@ -59,9 +60,12 @@ void	 init_map(char *line, t_data *s)
 				ft_exit("incorrect map!", 1);
 			return ;
 		}
-	if (line[i] != '1' /*|| line[ft_strlen(line) - 1] != '1'*/)
+	width = ft_strlen(line);
+	if (line[i] != '1' || line[width - 1] != '1')
 		ft_exit("incorrect map borders!", 1);
-		
+	s->t.map_width < width ? s->t.map_width = width : 0;
+	printf("%d", s->t.map_width);
+
 	s->map[s->t.lines_cnt++] = line;
 	s->t.mass = s->map;
 	s->map = (char **)ft_calloc(1 + s->t.lines_cnt, sizeof(char *));

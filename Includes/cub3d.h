@@ -10,7 +10,7 @@
 # include <errno.h>
 # include <stdbool.h>
 
-
+static int map_width = 0; //	Перенести в одну из структур!
 
 # define	R	0b00000001
 # define	NO	0b00000010
@@ -53,6 +53,7 @@ typedef struct		s_temp
 {
 	char			**mass;
 	int				lines_cnt;
+	int				map_width;
 }					t_temp;
 
 typedef struct		s_xpm

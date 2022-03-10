@@ -20,7 +20,7 @@ int main(int ac, char **av) {
 	{
 		// printf("\033[32m=> Start:\033[0m\n");
 		ret_gnl = get_next_line(fd, &line);
-		// printf("\tline:\t|%s|\t f = %d\tl = %d\n", line, s.f, (int)ft_strlen(line));
+		printf("\tline:\t|%s|\t f = %d\tl = %d\n", line, s.f, (int)ft_strlen(line));
 
 		if (s.f < 128)
 		{
@@ -41,17 +41,35 @@ int main(int ac, char **av) {
 	{
 		checking_boundary_symbols(&s, '0');
 		check_player(&s);
+
+		/* Перевод в одномерный массив*/
+		char *map = malloc(sizeof(char) * (s.t.map_width * s.t.lines_cnt + 1));
+		int i = -1;
+		int x = -1;
+		while (s.map[++x])
+		{
+			int y = -1;
+			while (s.map[x][++y])
+				map[++i] = s.map[x][y]; 
+			while (s.t.map_width > y++)
+				map[++i] = ' ';
+		}
+		if (!s.map[x + 1])
+			map[++i] = '\0';
+		// printf("%s\n", map);
+
+
 	}
-	// if (s.rslt)
-	// 	printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
-	// if (s.txtr){
-	// 	printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s.txtr->no, s.txtr->so, s.txtr->we, s.txtr->ea, s.txtr->s);
-		// printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s.txtr->f[0], s.txtr->f[1], s.txtr->f[2], s.txtr->c[0], s.txtr->c[1], s.txtr->c[2]);
-		// }
-	// int i = -1;
-	// while (s.map[++i])
-	// 	printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
-	// printf("\tmap[%d]\t|%s|\n", i, *s.map);
+	if (s.rslt)
+		printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
+	if (s.txtr){
+		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s.txtr->no, s.txtr->so, s.txtr->we, s.txtr->ea, s.txtr->s);
+		printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s.txtr->f[0], s.txtr->f[1], s.txtr->f[2], s.txtr->c[0], s.txtr->c[1], s.txtr->c[2]);
+		}
+	int i = -1;
+	while (s.map[++i])
+		printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
+	printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
 
 	/*MLX*/
 	// int g = 0;
@@ -61,14 +79,14 @@ int main(int ac, char **av) {
 
 	// s.mlx = *(t_mlx *)ft_calloc(1, sizeof(t_mlx)); /* Нужно ли выделять память динамическую память или оставить со стека*/
 
-	s.mlx.ptr = mlx_init();
-	s.mlx.win_ptr = mlx_new_window(s.mlx.ptr, 200, 200, "miniMap");
-	s.mlx.img = (t_xpm *)ft_calloc(1, sizeof (t_xpm));
-	s.mlx.img->ptr = mlx_new_image(s.mlx.ptr, 100, 100);
-	s.mlx.img->addr = mlx_get_data_addr(&s.mlx.img->ptr, &s.mlx.img->bpp, &s.mlx.img->ll, &s.mlx.img->endian);
+	// s.mlx.ptr = mlx_init();
+	// s.mlx.win_ptr = mlx_new_window(s.mlx.ptr, 200, 200, "miniMap");
+	// s.mlx.img = (t_xpm *)ft_calloc(1, sizeof (t_xpm));
+	// s.mlx.img->ptr = mlx_new_image(s.mlx.ptr, 100, 100);
+	// s.mlx.img->addr = mlx_get_data_addr(&s.mlx.img->ptr, &s.mlx.img->bpp, &s.mlx.img->ll, &s.mlx.img->endian);
 	// my_mlx_pixel_put(s.mlx.img, 10, 10, 55);
 	// mlx_put_image_to_window(s.mlx.ptr, s.mlx.win_ptr, s.mlx.img->ptr, 5, 5);
 
-	mlx_loop(s.mlx.ptr);
+	// mlx_loop(s.mlx.ptr);
 	return (0);
 }
