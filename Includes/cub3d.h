@@ -23,13 +23,14 @@ static int map_width = 0; //	Перенести в одну из структу�
 
 typedef struct		s_player
 {
+	char			dir;
 	unsigned int	x;			//положение игрок на карте по горизонтали
 	unsigned int	y;			//положение игрок на карте по вертикали
-	unsigned int	distance;	//Растояние до стены
-	int				speed;		//Скорость передвижения
-	int				fov;		//field of view (поле зрения)
-	bool			in_zone;	//Расположение в границах карты
-	bool			hit_wall;	//Ударился об стенку
+	// unsigned int	distance;	//Растояние до стены
+	// int				speed;		//Скорость передвижения
+	// int				fov;		//field of view (поле зрения)
+	// bool			in_zone;	//Расположение в границах карты
+	// bool			hit_wall;	//Ударился об стенку
 }					t_player;
 
 typedef struct		s_resolution
@@ -58,13 +59,13 @@ typedef struct		s_temp
 
 typedef struct		s_xpm
 {
-	void			*ptr;
-	char			*addr;
-	int				bpp;
-	int				ll;
-	int				endian;
-	int				w;
-	int				h;
+	// void			*ptr;
+	// char			*addr;
+	// int				bpp;
+	// int				ll;
+	// int				endian;
+	// int				w;
+	// int				h;
 }					t_xpm;
 
 typedef struct		s_mlx
@@ -77,6 +78,7 @@ typedef struct		s_mlx
 typedef struct		s_data
 {
 	char			**map;
+	char			*map_one_dimension;
 	unsigned char 	f;
 	t_resolution	*rslt;
 	t_textures		*txtr;

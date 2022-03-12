@@ -7,15 +7,15 @@ int main(int ac, char **av) {
 	int fd;
 	int ret_gnl = 1;
 	char *line;
-	
+/*void	check_map_file*/
     if (ac != 2)
 		ft_exit("Invalid argument!", 1);
-	if (av[1] && !(strlen(av[1]) > 3 && !strcmp(av[1] + strlen(av[1]) - 4, ".cub")))
+	if (av[1] && !(ft_strlen(av[1]) > 3 && !ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub")))
 		ft_exit("Incorrect map name!", 1);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		ft_exit(strerror(errno), 1);
-	s.map = (char **)ft_calloc(2, sizeof(char *));
+/*void	check_map_file_content*/
 	while (ret_gnl)
 	{
 		// printf("\033[32m=> Start:\033[0m\n");
@@ -42,21 +42,24 @@ int main(int ac, char **av) {
 		checking_boundary_symbols(&s, '0');
 		check_player(&s);
 
+		/*prd*/
+
 		/* Перевод в одномерный массив*/
-		char *map = malloc(sizeof(char) * (s.t.map_width * s.t.lines_cnt + 1));
+		s.map_one_dimension = ft_calloc(s.t.map_width * s.t.lines_cnt + 1, sizeof(char));
 		int i = -1;
 		int x = -1;
 		while (s.map[++x])
 		{
 			int y = -1;
 			while (s.map[x][++y])
-				map[++i] = s.map[x][y]; 
+				s.map_one_dimension[++i] = s.map[x][y]; 
 			while (s.t.map_width > y++)
-				map[++i] = ' ';
+				s.map_one_dimension[++i] = ' ';
 		}
 		if (!s.map[x + 1])
-			map[++i] = '\0';
-		// printf("%s\n", map);
+			s.map_one_dimension[++i] = '\0';
+		printf("%s\n", s.map_one_dimension);
+		free(s.map);
 
 
 	}
@@ -70,6 +73,7 @@ int main(int ac, char **av) {
 	while (s.map[++i])
 		printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
 	printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
+
 
 	/*MLX*/
 	// int g = 0;

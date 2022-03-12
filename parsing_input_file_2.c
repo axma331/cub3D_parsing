@@ -53,6 +53,12 @@ void	 init_map(char *line, t_data *s)
 	int width;
 	
 	i = 0;
+	if (!s->map)
+	{
+		s->map = (char **)ft_calloc(2, sizeof(char *));
+		if (!s->map)
+			ft_exit(strerror(errno), 1);
+	}	
 	while (line[i] == ' ' || line[i] == '\t' || !line[0])
 		if (!line[++i])
 		{
@@ -63,7 +69,7 @@ void	 init_map(char *line, t_data *s)
 	width = ft_strlen(line);
 	if (line[i] != '1' || line[width - 1] != '1')
 		ft_exit("incorrect map borders!", 1);
-	s->t.map_width < width ? s->t.map_width = width : 0;
+	if (s->t.map_width < width) { s->t.map_width = width; }
 	printf("%d", s->t.map_width);
 
 	s->map[s->t.lines_cnt++] = line;
@@ -112,22 +118,44 @@ void checking_boundary_symbols(t_data *s, const char c) /* Добавить во
 	}
 }
 
+static int	find_position(const char *symbols, char *str)
+{
+	int	i;
+
+	i = -1;
+	while(str[++i]) {
+		if (ft_strchr(symbols, str[i]))
+			return i;
+	}
+	return -1;
+}
+
 void check_player(t_data *s) /* Добавить возможность подстановки подстановки символа вместо '0'*/
 {
 	int y = -1;
+	int pos = 0;
 
 	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
-		if (ft_strchr(s->map[y], 'N') || ft_strchr(s->map[y], 'S') || ft_strchr(s->map[y], 'E') || ft_strchr(s->map[y], 'W'))
+	{
+		pos = find_position("NSWE", s->map[y]);
+		if (pos != -1)
 		{
-			/* Установить флаг что мы нашли позицию и более не повторялось*/
-			/*Оставить условие, что елли флага нет, то малочим, чтоб повторно не выделять*/
-			s->plyr = (t_player *)ft_calloc(1, sizeof(t_player *));
 			if (!s->plyr)
-				ft_exit(strerror(errno), 1);
+			{
+				s->plyr = (t_player *)ft_calloc(1, sizeof(t_player *));
+				if (!s->plyr)
+					ft_exit(strerror(errno), 1);
+			}
+			if (s->plyr->dir)
+				ft_exit("More than one position an player!", 1);
+			s->plyr->dir = s->map[y][pos];
+			s->plyr->y = pos;
+			s->plyr->x = y;
+			printf ("\ndir:\t%c\nx:\t%d\ny:\t%d\n", s->plyr->dir, s->plyr->x, s->plyr->y);
+
 			// printf("|%d|\t|%s|\n", y * 100, s->map[y]);
 			/*Прописать проверху окружения для позиции используя checking_boundary_symbols*/
 			checking_boundary_symbols(s, 'N');
 		}
-
-
+	}
 }

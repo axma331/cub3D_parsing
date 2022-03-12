@@ -34,7 +34,7 @@ int	init_resolution(char *line, t_data *s)
 		while (ft_isdigit(*line))
 			line++;
 	}
-	if (!check_resolution_values(s, 1920, 1080))
+	if (!check_resolution_values(s, 1920, 1080)) /*Проверка разрешения скорректировать*/
 		ft_exit("Incorrect resolution!", 1);
 	return (true);
 }
