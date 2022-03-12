@@ -58,14 +58,12 @@ int main(int ac, char **av) {
 		}
 		if (!s.map[x + 1])
 			s.map_one_dimension[++i] = '\0';
+		free(s.map);
 		
 		int j = -1;
 		while (s.map_one_dimension[++j])
 			!(j % s.t.map_width) ? printf("\n") : printf("%c", s.map_one_dimension[j]);
 		printf("\n");
-		
-		// printf("%s\n", s.map_one_dimension);
-		free(s.map);
 
 
 	}
