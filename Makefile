@@ -3,9 +3,9 @@ NAME				:= 	cub3d
 CC					:= 	gcc
 RM					:= 	rm -rf
 
-OFLAGS				:=	-O2 -g
-# OFLAGS				+=	-fsanitize=address
-CFLAGS				:= 	$(OFLAGS) -Wall -Wextra -Werror
+CFLAGS				:=	-Wall -Wextra -Werror
+CFLAGS				+=	-O2 -g
+# CFLAGS				+=	-fsanitize=address
 NORM				:= 	-R CheckForbiddenSourceHeader
 
 LIBFT_DIR			:= 	../libft/
@@ -16,12 +16,12 @@ MLX_DIR				:= ./mlx/
 MLXLIB				:= $(MLX_DIR)libmlx.dylib
 MLXFLAGS			:= $(MLXLIB) -lmlx -framework OpenGL -framework AppKit
 
-INCLUDES			:= 	Includes/
+INCLUDES			:= 	includes/
 HEADER				:= 	$(INCLUDES)*.h
 
 VPATH				:=	$(SRCS_DIRS)
-SRCS_DIRS			:=	./
-SRCS				:= 	main.c	parsing_input_file_1.c parsing_input_file_2.c
+SRCS_DIRS			:=	./parsing/
+SRCS				:= 	main.c	parsing_input_file.c parsing_textures.c parsing_colors_and_player.c parsing_map.c
 
 OBJS_DIR			:=	.objs/
 OBJS				:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:%.c=%.o)))

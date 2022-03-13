@@ -10,8 +10,6 @@
 # include <errno.h>
 # include <stdbool.h>
 
-static int map_width = 0; //	Перенести в одну из структур!
-
 # define	NO	0b00000001
 # define	SO	0b00000010
 # define	WE	0b00000100
@@ -55,18 +53,23 @@ typedef struct		s_temp
 typedef struct		s_data
 {
 	char			**map;
-	char			*map_one_dimension;
-	unsigned char 	f;
-	t_resolution	rslt;
+	char			*map_str;
 	t_textures		*txtr;
-	t_player		*plyr;
+	t_resolution	rslt;
+	t_player		plyr;
 	t_temp			t;
+	unsigned char 	f;
 }					t_data;
 
 
-void	init_resolution(t_data *s, int width, int height);
-int		init_texture(char *line, t_data *s);
+int	get_correctly_maps_fd(int ac, char *av[]);
+int	init_texture(char *line, t_data *s);
 char	*check_path(char *line, t_data *s, int mask);
+void	init_file_content(int fd, t_data *s);
+void	convert_one_dimension_map(t_data *s);
+void	parsing_start(t_data *s, int ac, char *av[]);
+
+void	init_resolution(t_data *s, int width, int height);
 int		check_extension(const char* line, const char* ext);
 void	check_color(char *line, t_data *s, int mask);
 void	init_map(char *line, t_data *s);
