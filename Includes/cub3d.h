@@ -21,6 +21,8 @@ static int map_width = 0; //	Перенести в одну из структу�
 # define	C	0b01000000
 # define	S	0b10000000
 
+# define	VLD	0b01111111
+
 typedef struct		s_player
 {
 	char			dir;

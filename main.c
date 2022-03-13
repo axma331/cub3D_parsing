@@ -1,83 +1,103 @@
 #include "Includes/cub3d.h" /* Удалить указание папки!*/
 
-int main(int ac, char **av) {
-	t_data	s;
-	ft_bzero(&s, sizeof(t_data));
+void	print_data(t_data *s)
+{
+	/*player pisition*/
+	printf ("\n\tdir:\t|%c|\n\tx:\t|%d|\n\ty:\t|%d|\n", s->plyr->dir, s->plyr->x, s->plyr->y);
+	/*resolutions*/
+	if (s->rslt)
+		printf("\tR\t|%d %d|\n", s->rslt->height, s->rslt->width);
+	/*texture*/
+	if (s->txtr){
+		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
+		printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
+	}
+	/*one dimension map*/
+	int j = -1;
+	while (s->map_one_dimension[++j])
+		!(j % s->t.map_width) ? (j != 0 ? printf("|\n\t|") : printf("\n\t|")) : printf("%c", s->map_one_dimension[j]);
+	printf("|\n\n");
+	/*two dimension map*/
+	int i = -1;
+	while (s->map[++i])
+		printf("\tmap[%d]\t|%s|\n", i, s->map[i]);
+	printf("\tmap[%d]\t|%s|\n", i, s->map[i]);
+}
 
+int	get_correctly_maps_fd(int ac, char *av[])
+{
 	int fd;
-	int ret_gnl = 1;
-	char *line;
-/*void	check_map_file*/
-    if (ac != 2)
+
+	if (ac != 2)
 		ft_exit("Invalid argument!", 1);
 	if (av[1] && !(ft_strlen(av[1]) > 3 && !ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub")))
 		ft_exit("Incorrect map name!", 1);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		ft_exit(strerror(errno), 1);
-/*void	check_map_file_content*/
+	return (fd);
+}
+
+void	init_file_content(int fd, t_data *s)
+{
+	int		ret_gnl;
+	char	*line;
+
+	ret_gnl = 1;
 	while (ret_gnl)
 	{
-		// printf("\033[32m=> Start:\033[0m\n");
 		ret_gnl = get_next_line(fd, &line);
-		printf("\tline:\t|%s|\t f = %d\tl = %d\n", line, s.f, (int)ft_strlen(line));
-
-		if (s.f < 128)
+		if (s->f <= VLD)
 		{
 			line = ft_strtrim(line, "\t ");
-			if (ft_isdigit(*line) && s.f < 128)
+			if (ft_isdigit(*line) && s->f <= VLD)
 				ft_exit("incorrect content map.cub", 1);
-			if ( *(line + 1) && *line == 'R' && init_resolution(++line, &s))
+			if ( *(line + 1) && *line == 'R' && init_resolution(++line, s))
 				continue ;
-			if (init_texture(line, &s))
+			if (init_texture(line, s))
 				continue ;
 		}
 		else
-			init_map(line, &s);
+			init_map(line, s);
+	}	
+}
 
-		// printf("\033[33m<= End!\n\n\033[0m");
-	}
-	if (!ret_gnl)
+void	convert_one_dimension_map(t_data *s)
+{
+	int	i;
+	int	x;
+	int	y;
+
+	i = -1;
+	x = -1;
+	s->map_one_dimension = ft_calloc(s->t.map_width * s->t.lines_cnt + 1, sizeof(char));
+	if (!s->map_one_dimension)
+		ft_exit(strerror(errno), 1);
+	while (s->map[++x])
 	{
-		checking_boundary_symbols(&s, '0');
-		check_player(&s);
-
-		/*prd*/
-
-		/* Перевод в одномерный массив*/
-		s.map_one_dimension = ft_calloc(s.t.map_width * s.t.lines_cnt + 1, sizeof(char));
-		int i = -1;
-		int x = -1;
-		while (s.map[++x])
-		{
-			int y = -1;
-			while (s.map[x][++y])
-				s.map_one_dimension[++i] = s.map[x][y]; 
-			while (s.t.map_width > y++)
-				s.map_one_dimension[++i] = ' ';
-		}
-		if (!s.map[x + 1])
-			s.map_one_dimension[++i] = '\0';
-		free(s.map);
-		
-		int j = -1;
-		while (s.map_one_dimension[++j])
-			!(j % s.t.map_width) ? printf("\n") : printf("%c", s.map_one_dimension[j]);
-		printf("\n");
-
-
+		y = -1;
+		while (s->map[x][++y])
+			s->map_one_dimension[++i] = s->map[x][y]; 
+		while (s->t.map_width > y++)
+			s->map_one_dimension[++i] = ' ';
 	}
-	if (s.rslt)
-		printf("\tR\t|%d %d|\n", s.rslt->height, s.rslt->width);
-	if (s.txtr){
-		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s.txtr->no, s.txtr->so, s.txtr->we, s.txtr->ea, s.txtr->s);
-		printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s.txtr->f[0], s.txtr->f[1], s.txtr->f[2], s.txtr->c[0], s.txtr->c[1], s.txtr->c[2]);
-		}
-	int i = -1;
-	while (s.map[++i])
-		printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
-	printf("\tmap[%d]\t|%s|\n", i, s.map[i]);
+	if (!s->map[x + 1])
+		s->map_one_dimension[++i] = '\0';
+	free(s->map);
+}
 
+
+int main(int ac, char **av) {
+	t_data	s;
+	int fd;
+
+	ft_bzero(&s, sizeof(t_data));
+	fd = get_correctly_maps_fd(ac, av);
+	init_file_content(fd, &s);
+	checking_boundary_symbols(&s, '0');
+	check_player(&s);
+	convert_one_dimension_map(&s);
+	print_data(&s);
 
 	/*MLX*/
 	// int g = 0;

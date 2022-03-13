@@ -151,7 +151,6 @@ void check_player(t_data *s) /* Добавить возможность подс
 			s->plyr->dir = s->map[y][pos];
 			s->plyr->x = pos;
 			s->plyr->y = y;
-			printf ("\ndir:\t%c\nx:\t%d\ny:\t%d\n", s->plyr->dir, s->plyr->x, s->plyr->y);
 
 			// printf("|%d|\t|%s|\n", y * 100, s->map[y]);
 			/*Прописать проверху окружения для позиции используя checking_boundary_symbols*/
