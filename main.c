@@ -5,11 +5,10 @@ void	print_data(t_data *s)
 	/*player pisition*/
 	printf ("\n\tdir:\t|%c|\n\tx:\t|%d|\n\ty:\t|%d|\n", s->plyr->dir, s->plyr->x, s->plyr->y);
 	/*resolutions*/
-	if (s->rslt)
-		printf("\tR\t|%d %d|\n", s->rslt->height, s->rslt->width);
+	printf("\tR\t|%d %d|\n", s->rslt.height, s->rslt.width);
 	/*texture*/
 	if (s->txtr){
-		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n\tS\t|%s|\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea, s->txtr->s);
+		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea);
 		printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
 	}
 	/*one dimension map*/
@@ -52,17 +51,15 @@ void	init_file_content(int fd, t_data *s)
 	while (ret_gnl)
 	{
 		ret_gnl = get_next_line(fd, &line);
-		if (s->f <= VLD)
+		if (s->f < VLD)
 		{
 			line = ft_strtrim(line, "\t ");
-			if (ft_isdigit(*line) && s->f <= VLD)
+			if (ft_isdigit(*line) && s->f < VLD)
 				ft_exit("Incorrect file content", 1);
-			if (*line == 'R' && init_resolution(line, s))
-				continue ;
 			if (init_texture(line, s))
 				continue ;
 		}
-		else
+		if (s->f == VLD)
 			init_map(line, s);
 	}
 }
@@ -99,26 +96,11 @@ int main(int ac, char **av) {
 	ft_bzero(&s, sizeof(t_data));
 	fd = get_correctly_maps_fd(ac, av);
 	init_file_content(fd, &s);
+	init_resolution(&s, 1920, 1080);
 	checking_boundary_symbols(&s, '0');
 	check_player(&s);
 	convert_one_dimension_map(&s);
 	print_data(&s);
 
 	return (0);
-
-	/*MLX*/
-	// int g = 0;
-	// g =  create_rgb(256, 25, 255, 9);
-	// printf("%X\n", g);
-
-	// s.mlx = *(t_mlx *)ft_calloc(1, sizeof(t_mlx)); /* Нужно ли выделять память динамическую память или оставить со стека*/
-
-	// s.mlx.ptr = mlx_init();
-	// s.mlx.win_ptr = mlx_new_window(s.mlx.ptr, 200, 200, "miniMap");
-	// s.mlx.img = (t_xpm *)ft_calloc(1, sizeof (t_xpm));
-	// s.mlx.img->ptr = mlx_new_image(s.mlx.ptr, 100, 100);
-	// s.mlx.img->addr = mlx_get_data_addr(&s.mlx.img->ptr, &s.mlx.img->bpp, &s.mlx.img->ll, &s.mlx.img->endian);
-	// my_mlx_pixel_put(s.mlx.img, 10, 10, 55);
-	// mlx_put_image_to_window(s.mlx.ptr, s.mlx.win_ptr, s.mlx.img->ptr, 5, 5);
-	// mlx_loop(s.mlx.ptr);
 }

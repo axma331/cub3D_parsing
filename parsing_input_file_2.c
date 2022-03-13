@@ -1,6 +1,6 @@
 #include "Includes/cub3d.h"
 
-void	 check_color(char *line, t_data *s, int mask)
+void	 check_color(char *line, t_data *s, int mask) /*Проверить наличии всех 3х чисел ( последнее число не проверяется)*/
 {	
 	int *fc;
 	int i;
@@ -17,15 +17,16 @@ void	 check_color(char *line, t_data *s, int mask)
 		ft_exit("Empty variables!", 1);
 	if (s->f & mask)
 		ft_exit("Recurring variables!", 1);
+
 	fc = s->txtr->f;
 	if (mask == C)
 	fc = s->txtr->c;
+
 	while (*line && (*line == ' ' || *line == '\t'))
 		line++;
 	while (*(line + i))
 	{
-		if (!(ft_isdigit(*(line + i)) || *(line + i) == ',' || *(line + i) == ' '
-			|| *(line + i) == '\t'|| *(line + i) == '+'))
+		if (!(ft_isdigit(*(line + i)) || *(line + i) == ',' || *(line + i) == ' ' || *(line + i) == '\t'|| *(line + i) == '+'))
 			ft_exit("Incorrect color!", 1);
 		d |= ft_isdigit(*(line + i));
 		if (*(line + i) == ',')
@@ -38,9 +39,17 @@ void	 check_color(char *line, t_data *s, int mask)
 			c++;
 		}
 		else if (c == 2 && c++)
-			fc[2] = ft_atoi_o(line + i - j + 2);
-		i++;
-		j++;
+		{
+			if (!ft_isdigit(*(line + i)))
+			{
+				printf("\n|-%c-|\n", *(line + i));  //Проверка последнего значения не выполняется!!!
+				ft_exit("Incorrect color value!", 1);
+			}
+			fc[2] = ft_atoi_o(line + i - j + 1);
+		}
+
+		++i;
+		++j;
 	}
 	if (fc[0] > 255 || fc[1] > 255 || fc[2] > 255)
 			ft_exit("Incorrect color value!", 1);
@@ -89,32 +98,24 @@ void checking_boundary_symbols(t_data *s, const char c) /* Добавить во
 
 	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
 	{
-		// printf("\tmap[%d]\t|%s|\n", y, s->map[y]);
 		int x = 0;
 		while (s->map[y][x] == ' ')
 			x++;
 		while ((!y || y == s->t.lines_cnt - 1) && s->map[y][x])
 		{
-			// printf("|%c|\n", s->map[y][x]);
 			if (!(s->map[y][x] == '1' || s->map[y][x] == ' '))
 				ft_exit("incorrect first/last line of the map!", 1);
 			x++;
 		}
 		while (s->map[y] && s->map[y][x])
 		{
-			// printf("|%d||%d|\t|%c|\n", y, x, s->map[y][x]);
 			if (s->map[y][x] == c
 				&& (!((y && s->map[y - 1][x] != ' ') && (s->map[y + 1] && s->map[y + 1][x] && (s->map[y + 1][x] != ' ' || !s->map[y + 1][x])) && s->map[y][x - 1] != ' ' && (s->map[y][x + 1] != ' ' || !s->map[y][x + 1]) && s->map[y][x + 1])
 				|| (s->map[y][x + 1] == '1' && s->map[y + 1][x] == '1' && (s->map[y + 1][x + 1] == ' ' || !s->map[y + 1][x + 1]))
 				|| (s->map[y][x + 1] == '1' && s->map[y - 1][x] == '1' && (s->map[y - 1][x + 1] == ' ' || !s->map[y - 1][x + 1]))
 				|| (s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1' && (s->map[y + 1][x - 1] == ' ' || !s->map[y + 1][x - 1]))
 				|| (s->map[y][x - 1] == '1' && s->map[y - 1][x] == '1' && s->map[y - 1][x - 1] == ' ')))
-			{
-				// printf("Error->|%c|\n", s->map[y - 1][x + 1]);
-				ft_exit("Error", 1);
-
-				return ;
-			}
+				ft_exit("Invalid map!", 1);
 			x++;
 		}
 	}
@@ -153,10 +154,8 @@ void check_player(t_data *s) /* Добавить возможность подс
 			s->plyr->dir = s->map[y][pos];
 			s->plyr->x = pos;
 			s->plyr->y = y;
-
-			// printf("|%d|\t|%s|\n", y * 100, s->map[y]);
-			/*Прописать проверху окружения для позиции используя checking_boundary_symbols*/
-			checking_boundary_symbols(s, 'N');
+			checking_boundary_symbols(s, s->plyr->dir);
+			s->map[y][pos] = '0';
 		}
 	}
 }

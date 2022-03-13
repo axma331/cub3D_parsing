@@ -1,40 +1,9 @@
 #include "Includes/cub3d.h"
 
-static int	check_resolution_values(t_data *s, int max_h, int max_w)
+void	init_resolution(t_data *s, int width, int height)
 {
-	if (!(0 < s->rslt->height && s->rslt->height <= max_h)
-		|| !(0 < s->rslt->width && s->rslt->width <= max_w))
-		return (false);
-	return (true);
-}
-
-int	init_resolution(char *line, t_data *s)
-{
-	if (++line && s->f & R)
-		ft_exit("Recurring variables!", 1);
-	s->rslt = (t_resolution *)ft_calloc(1, sizeof(t_resolution));
-	if (!(s->rslt))
-		ft_exit(strerror(errno), 1);
-	while (*line)
-	{
-		while (*line == ' ' || *line == '\t')
-			line++;
-		if (!(ft_isdigit(*line) || *line == ' ' || *line == '\t')
-			|| (ft_isdigit(*line) && s->rslt->height && s->rslt->width))
-			ft_exit("Incorrect resolution!", 1);
-		if (ft_isdigit(*line) && !(s->f & R))
-		{
-			s->rslt->height = ft_atoi_o(line);
-			s->f |= R;
-		}
-		else if (ft_isdigit(*line) && s->f & R)
-			s->rslt->width = ft_atoi_o(line);
-		while (ft_isdigit(*line))
-			line++;
-	}
-	if (!check_resolution_values(s, 1920, 1080)) /*Проверка разрешения необходимо скорректировать*/
-		ft_exit("Incorrect resolution!", 1);
-	return (true);
+	s->rslt.width = width; 
+	s->rslt.height = height;
 }
 
 static int	check_file(const char *line, const char *ext)
@@ -100,8 +69,6 @@ int	init_texture(char *line, t_data *s)
 		s->txtr->we = check_path(++line, s, WE);
 	else if (!ft_strncmp(line, "EA", 2) && line++)
 		s->txtr->ea = check_path(++line, s, EA);
-	else if (!ft_strncmp(line, "S", 1))
-		s->txtr->s = check_path(++line, s, S);
 	else if (!ft_strncmp(line, "F",  1) && line++)		
 		check_color(line, s, F);
 	else if (!ft_strncmp(line, "C", 1) && line++)
