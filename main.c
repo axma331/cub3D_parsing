@@ -32,6 +32,11 @@ int	get_correctly_maps_fd(int ac, char *av[])
 		ft_exit("Invalid argument!", 1);
 	if (av[1] && !(ft_strlen(av[1]) > 3 && !ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub")))
 		ft_exit("Incorrect map name!", 1);
+	if (open(av[1], O_DIRECTORY) == 3)
+	{
+		close(3);
+		ft_exit("This is directory!", 1);
+	}
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		ft_exit(strerror(errno), 1);
@@ -51,15 +56,15 @@ void	init_file_content(int fd, t_data *s)
 		{
 			line = ft_strtrim(line, "\t ");
 			if (ft_isdigit(*line) && s->f <= VLD)
-				ft_exit("incorrect content map.cub", 1);
-			if ( *(line + 1) && *line == 'R' && init_resolution(++line, s))
+				ft_exit("Incorrect file content", 1);
+			if (*line == 'R' && init_resolution(line, s))
 				continue ;
 			if (init_texture(line, s))
 				continue ;
 		}
 		else
 			init_map(line, s);
-	}	
+	}
 }
 
 void	convert_one_dimension_map(t_data *s)
@@ -99,11 +104,12 @@ int main(int ac, char **av) {
 	convert_one_dimension_map(&s);
 	print_data(&s);
 
+	return (0);
+
 	/*MLX*/
 	// int g = 0;
 	// g =  create_rgb(256, 25, 255, 9);
 	// printf("%X\n", g);
-
 
 	// s.mlx = *(t_mlx *)ft_calloc(1, sizeof(t_mlx)); /* Нужно ли выделять память динамическую память или оставить со стека*/
 
@@ -114,7 +120,5 @@ int main(int ac, char **av) {
 	// s.mlx.img->addr = mlx_get_data_addr(&s.mlx.img->ptr, &s.mlx.img->bpp, &s.mlx.img->ll, &s.mlx.img->endian);
 	// my_mlx_pixel_put(s.mlx.img, 10, 10, 55);
 	// mlx_put_image_to_window(s.mlx.ptr, s.mlx.win_ptr, s.mlx.img->ptr, 5, 5);
-
 	// mlx_loop(s.mlx.ptr);
-	return (0);
 }

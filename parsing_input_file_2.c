@@ -110,7 +110,9 @@ void checking_boundary_symbols(t_data *s, const char c) /* Добавить во
 				|| (s->map[y][x - 1] == '1' && s->map[y + 1][x] == '1' && (s->map[y + 1][x - 1] == ' ' || !s->map[y + 1][x - 1]))
 				|| (s->map[y][x - 1] == '1' && s->map[y - 1][x] == '1' && s->map[y - 1][x - 1] == ' ')))
 			{
-				printf("Error->|%c|\n", s->map[y - 1][x + 1]);
+				// printf("Error->|%c|\n", s->map[y - 1][x + 1]);
+				ft_exit("Error", 1);
+
 				return ;
 			}
 			x++;

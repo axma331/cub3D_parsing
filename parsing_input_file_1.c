@@ -10,9 +10,7 @@ static int	check_resolution_values(t_data *s, int max_h, int max_w)
 
 int	init_resolution(char *line, t_data *s)
 {
-	if (!*line)
-		ft_exit("Empty variables!", 1);
-	if (s->f & R)
+	if (++line && s->f & R)
 		ft_exit("Recurring variables!", 1);
 	s->rslt = (t_resolution *)ft_calloc(1, sizeof(t_resolution));
 	if (!(s->rslt))
@@ -34,7 +32,7 @@ int	init_resolution(char *line, t_data *s)
 		while (ft_isdigit(*line))
 			line++;
 	}
-	if (!check_resolution_values(s, 1920, 1080)) /*Проверка разрешения скорректировать*/
+	if (!check_resolution_values(s, 1920, 1080)) /*Проверка разрешения необходимо скорректировать*/
 		ft_exit("Incorrect resolution!", 1);
 	return (true);
 }
@@ -53,7 +51,7 @@ static int	check_file(const char *line, const char *ext)
 	if (fd == -1)
 	{
 		close (fd);
-		// ft_exit(strerror(errno), 1);
+		ft_exit(strerror(errno), 1);
 	}
 	close (fd);
 	return (true);
@@ -79,7 +77,7 @@ char	*check_path(char *line, t_data *s, int mask)
 			ft_exit("Incorrect path!", 1);
 		i++;
 	}
-	if (!(check_file(line, ".png") || check_file(line, ".xmp")))
+	if (!(check_file(line, ".png") || check_file(line, ".xpm")))
 		ft_exit("Incorrect file extension!", 1);
 	s->f |= mask;
 	return (ft_substr(line, 0, ft_strlen(line)));
