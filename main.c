@@ -3,7 +3,6 @@
 void	print_data(t_data *s)
 {
 	/*player pisition*/
-	// if (s->plyr.dir)
 	printf ("\n\tdir:\t|%c|\n\tx:\t|%d|\n\ty:\t|%d|\n", s->plyr.dir, s->plyr.x, s->plyr.y);
 	/*resolutions*/
 	printf("\tR\t|%d %d|\n", s->rslt.height, s->rslt.width);

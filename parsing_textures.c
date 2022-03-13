@@ -20,7 +20,7 @@ static int	check_file(const char *line, const char *ext)
 	return (true);
 }
 
-char	*check_path(char *line, t_data *s, int mask)
+char	*check_texture_path(char *line, t_data *s, int mask)
 {
 	int	i;
 
@@ -56,13 +56,13 @@ int	init_texture(char *line, t_data *s)
 		ft_exit(strerror(errno), 1);
 	mask = s->f;
 	if (!ft_strncmp(line, "NO", 2) && line++)
-		s->txtr->no = check_path(++line, s, NO);
+		s->txtr->no = check_texture_path(++line, s, NO);
 	else if (!ft_strncmp(line, "SO", 2) && line++)
-		s->txtr->so = check_path(++line, s, SO);
+		s->txtr->so = check_texture_path(++line, s, SO);
 	else if (!ft_strncmp(line, "WE", 2) && line++)
-		s->txtr->we = check_path(++line, s, WE);
+		s->txtr->we = check_texture_path(++line, s, WE);
 	else if (!ft_strncmp(line, "EA", 2) && line++)
-		s->txtr->ea = check_path(++line, s, EA);
+		s->txtr->ea = check_texture_path(++line, s, EA);
 	else if (!ft_strncmp(line, "F", 1) && line++)
 		check_color(line, s, F);
 	else if (!ft_strncmp(line, "C", 1) && line++)

@@ -22,7 +22,7 @@ int	get_correctly_maps_fd(int ac, char *av[])
 
 void	init_resolution(t_data *s, int width, int height)
 {
-	s->rslt.width = width; 
+	s->rslt.width = width;
 	s->rslt.height = height;
 }
 
@@ -50,7 +50,7 @@ void	init_file_content(int fd, t_data *s)
 
 void	parsing_start(t_data *s, int ac, char *av[])
 {
-	int fd;	
+	int	fd;
 
 	ft_bzero(s, sizeof(t_data));
 	fd = get_correctly_maps_fd(ac, av);

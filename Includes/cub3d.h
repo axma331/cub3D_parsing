@@ -62,15 +62,10 @@ typedef struct		s_data
 }					t_data;
 
 
-int	get_correctly_maps_fd(int ac, char *av[]);
-int	init_texture(char *line, t_data *s);
-char	*check_path(char *line, t_data *s, int mask);
-void	init_file_content(int fd, t_data *s);
-void	convert_one_dimension_map(t_data *s);
 void	parsing_start(t_data *s, int ac, char *av[]);
-
-void	init_resolution(t_data *s, int width, int height);
-int		check_extension(const char* line, const char* ext);
+int		get_correctly_maps_fd(int ac, char *av[]);
+int		init_texture(char *line, t_data *s);
+void	convert_one_dimension_map(t_data *s);
 void	check_color(char *line, t_data *s, int mask);
 void	init_map(char *line, t_data *s);
 void	checking_boundary_symbols(t_data *s, const char c);

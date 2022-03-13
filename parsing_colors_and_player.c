@@ -69,19 +69,17 @@ static int	find_position(const char *symbols, char *str)
 	int	i;
 
 	i = -1;
-	while(str[++i])
-	{
+	while (str[++i])
 		if (ft_strchr(symbols, str[i]))
 			return (i);
-	}
 	return (-1);
 }
 
-void check_player(t_data *s)
+void	check_player(t_data *s)
 {
-	int y;
-	int pos;
-	
+	int	y;
+	int	pos;
+
 	y = -1;
 	pos = 0;
 	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
