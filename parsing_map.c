@@ -66,7 +66,7 @@ void	checking_boundary_symbols(t_data *s, const char c)
 	}
 }
 
-static int	check_maps_error(char *line, t_data *s, int i)
+static int	check_maps_error(const char *line, t_data *s, int i)
 {
 	if (!s->map)
 	{

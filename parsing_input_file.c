@@ -37,7 +37,9 @@ void	init_file_content(int fd, t_data *s)
 		ret_gnl = get_next_line(fd, &line);
 		if (s->f < VLD)
 		{
-			line = ft_strtrim(line, "\t ");
+			s->t.ptr = ft_strtrim(line, "\t ");
+			free(line);
+			line = s->t.ptr;
 			if (ft_isdigit(*line) && s->f < VLD)
 				ft_exit("Incorrect file content", 1);
 			if (init_texture(line, s))

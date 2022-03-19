@@ -27,6 +27,7 @@ int main(int ac, char **av) {
 	t_data	s;
 
 	parsing_start(&s, ac, av);
-	print_data(&s);
+	// print_data(&s);
+	free(s.txtr);
 	return (0);
 }

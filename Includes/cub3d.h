@@ -46,6 +46,7 @@ typedef struct		s_textures
 typedef struct		s_temp
 {
 	char			**mass;
+	char			*ptr;
 	int				lines_cnt;
 	int				map_width;
 }					t_temp;
