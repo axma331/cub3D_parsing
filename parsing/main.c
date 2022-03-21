@@ -4,8 +4,6 @@ void	print_data(t_data *s)
 {
 	/*player pisition*/
 	printf ("\n\tdir:\t|%c|\n\tx:\t|%d|\n\ty:\t|%d|\n", s->plyr.dir, s->plyr.x, s->plyr.y);
-	/*resolutions*/
-	printf("\tR\t|%d %d|\n", s->rslt.height, s->rslt.width);
 	/*texture*/
 	if (s->txtr){
 		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea);
@@ -27,7 +25,7 @@ int main(int ac, char **av) {
 	t_data	s;
 
 	parsing_start(&s, ac, av);
-	// print_data(&s);
+	print_data(&s);
 	// free(s.txtr);
 	return (0);
 }

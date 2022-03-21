@@ -25,12 +25,6 @@ typedef struct		s_player
 	unsigned int	y;
 }					t_player;
 
-typedef struct		s_resolution
-{
-	int				height;
-	int				width;
-}					t_resolution;
-
 typedef struct		s_textures
 {
 	char			*no;
@@ -55,7 +49,6 @@ typedef struct		s_data
 	char			**map;
 	char			*map_str;
 	t_textures		*txtr;
-	t_resolution	rslt;
 	t_player		plyr;
 	t_temp			t;
 	unsigned char 	f;

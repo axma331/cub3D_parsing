@@ -54,32 +54,29 @@ void	checking_boundary_symbols(t_data *s, const char c)
 		while (s->map[y][x] == ' ')
 			x++;
 		while ((!y || y == s->t.lines_cnt - 1) && s->map[y][x])
-		{
-			if (!(s->map[y][x] == '1' || s->map[y][x] == ' '))
+			if (!(ft_strchr(" \t1", s->map[y][x++])))
 				ft_exit("incorrect first/last line of the map!", 1);
-			x++;
-		}
 		while (s->map[y] && s->map[y][x])
 			if (check_boundary(s->map, c, x, y))
 				x++;
 	}
 }
 
-static int	check_maps_error(const char *line, t_data *s, int i)
+static int	check_maps_error(const char *line, t_data *s)
 {
+	int i;
+
 	if (!s->map)
 	{
 		s->map = (char **)ft_calloc(2, sizeof(char *));
 		if (!s->map)
 			ft_exit(strerror(errno), 1);
-	}	
-	while (line[i] == ' ' || line[i] == '\t' || !line[0])
-	{
-		 if (!line[i])
-			return (-1);
-		else if (!line[++i] && *s->map)
-			ft_exit("incorrect map!", 1);
 	}
+	if (!line[0])
+		return (-1);
+	i = 0;
+	while (ft_strchr(" \t", line[i]))
+		++i;
 	return (i);
 }
 
@@ -88,12 +85,17 @@ void	init_map(char *line, t_data *s)
 	int	i;
 	int	width;
 
-	i = check_maps_error(line, s, 0);
+	i = check_maps_error(line, s);
 	if (i == -1)
 		return ;
 	width = ft_strlen(line);
+	while (ft_strchr(" \t", line[width - 1]))
+		--width;
 	if (line[i] != '1' || line[width - 1] != '1')
 		ft_exit("incorrect map borders!", 1);
+	while (i < width)
+		if (!ft_strchr(" \t01NSWE", line[i++]))
+			ft_exit("incorrect map!", 1);	
 	if (s->t.map_width < width)
 		s->t.map_width = width;
 	s->map[s->t.lines_cnt++] = line;

@@ -20,12 +20,6 @@ int	get_correctly_maps_fd(int ac, char *av[])
 	return (fd);
 }
 
-void	init_resolution(t_data *s, int width, int height)
-{
-	s->rslt.width = width;
-	s->rslt.height = height;
-}
-
 void	init_file_content(int fd, t_data *s)
 {
 	int		ret_gnl;
@@ -57,7 +51,6 @@ void	parsing_start(t_data *s, int ac, char *av[])
 	ft_bzero(s, sizeof(t_data));
 	fd = get_correctly_maps_fd(ac, av);
 	init_file_content(fd, s);
-	init_resolution(s, 1920, 1080);
 	checking_boundary_symbols(s, '0');
 	check_player(s);
 	convert_one_dimension_map(s);
