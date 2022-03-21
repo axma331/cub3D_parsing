@@ -6,15 +6,12 @@ RM					:= 	rm -rf
 CFLAGS				:=	-Wall -Wextra -Werror
 CFLAGS				+=	-O2 -g
 # CFLAGS				+=	-fsanitize=address
+
 NORM				:= 	-R CheckForbiddenSourceHeader
 
-LIBFT_DIR			:= 	../libft/
+LIBFT_DIR			:= 	./libft/
 LIBFT				:= 	$(LIBFT_DIR)libft.a
 LIBFT_HED			:= 	$(LIBFT_DIR)libft.h
-
-MLX_DIR				:= ./mlx/
-MLXLIB				:= $(MLX_DIR)libmlx.dylib
-MLXFLAGS			:= $(MLXLIB) -lmlx -framework OpenGL -framework AppKit
 
 INCLUDES			:= 	includes/
 HEADER				:= 	$(INCLUDES)*.h
@@ -26,10 +23,10 @@ SRCS				:= 	main.c	parsing_input_file.c parsing_textures.c parsing_colors_and_pl
 OBJS_DIR			:=	.objs/
 OBJS				:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:%.c=%.o)))
 
-all:				libft_make mlx_make $(NAME)
+all:				libft_make $(NAME)
 
-$(NAME):			$(OBJS_DIR) $(OBJS) $(LIBFT) $(MLXLIB) Makefile
-					$(CC) $(CFLAGS) -I $(MLXFLAGS) $(OBJS) $(LIBFT) -o $@
+$(NAME):			$(OBJS_DIR) $(OBJS) $(LIBFT) Makefile
+					$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@
 					@echo "$(CLRCY)create$(CLREL) $@$(CLRRS)"
 
 $(OBJS_DIR)%.o:		%.c $(HEADER)
@@ -41,7 +38,6 @@ $(OBJS_DIR):
 
 clean:
 					@-make clean -C $(LIBFT_DIR)
-					@-make clean -C $(MLX_DIR)
 					$(RM) $(OBJS_DIR)
 
 fclean:				clean
@@ -54,9 +50,6 @@ re:					fclean all
 
 libft_make:
 					@make -C $(LIBFT_DIR)
-
-mlx_make:
-					@make -C $(MLX_DIR)
 
 norme:
 					norminette $(NORM) $(SRCS)*.c $(INCLUDES)*.h
@@ -76,7 +69,7 @@ gitpush:			fclean
 					sh .gitpush;}
 					rm .gitpush
 
-.PHONY:				all clean fclean re libft_make mlx_make
+.PHONY:				all clean fclean re libft_make
 
 #-c говорит не запускать линкер, потому что нет main
 #-g порождает отладочную информацию в родном формате операционной системы
