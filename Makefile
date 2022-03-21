@@ -1,36 +1,33 @@
-NAME				:= 	cub3d
+NAME				= 	cub3d
+CC					= 	gcc
+RM					= 	rm -rf
 
-CC					:= 	gcc
-RM					:= 	rm -rf
-
-CFLAGS				:=	-Wall -Wextra -Werror
+CFLAGS				=	-Wall -Wextra -Werror
 CFLAGS				+=	-O2 -g
 # CFLAGS				+=	-fsanitize=address
 
-NORM				:= 	-R CheckForbiddenSourceHeader
+NORM				= 	-R CheckForbiddenSourceHeader
 
-LIBFT_DIR			:= 	./libft/
-LIBFT				:= 	$(LIBFT_DIR)libft.a
-LIBFT_HED			:= 	$(LIBFT_DIR)libft.h
+LIBFT_DIR			= 	./libft/
+LIBFT				= 	$(LIBFT_DIR)libft.a
+LIBFT_HED			= 	$(LIBFT_DIR)libft.h
 
-INCLUDES			:= 	includes/
-HEADER				:= 	$(INCLUDES)*.h
+INCLUDES			= 	./includes/
+HEADER				= 	$(INCLUDES)cub3d.h
 
-VPATH				:=	$(SRCS_DIRS)
-SRCS_DIRS			:=	./parsing/
-SRCS				:= 	main.c	parsing_input_file.c parsing_textures.c parsing_colors_and_player.c parsing_map.c
+SRCS_DIR			=	./parsing/
+SRCS				=	main.c	parsing_input_file.c parsing_textures.c parsing_colors_and_player.c parsing_map.c
 
-OBJS_DIR			:=	.objs/
-OBJS				:=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:%.c=%.o)))
+OBJS_DIR			=	./.objs/
+OBJS				=	$(addprefix $(OBJS_DIR), $(notdir $(SRCS:%.c=%.o)))
 
-all:				libft_make $(NAME)
+all:				Makefile libft_make $(NAME) 
 
-$(NAME):			$(OBJS_DIR) $(OBJS) $(LIBFT) Makefile
+$(NAME):			$(LIBFT) $(OBJS_DIR) $(OBJS) 
 					$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@
 					@echo "$(CLRCY)create$(CLREL) $@$(CLRRS)"
 
-$(OBJS_DIR)%.o:		%.c $(HEADER)
-					cp $(LIBFT_HED) $(INCLUDES)
+$(OBJS_DIR)%.o:		$(SRCS_DIR)%.c $(HEADER)
 					$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
 
 $(OBJS_DIR):
@@ -44,7 +41,6 @@ fclean:				clean
 					@make fclean -C $(LIBFT_DIR)
 					$(RM) $(NAME)
 					@$(RM) .gitpush
-					@$(RM) $(INCLUDES)libft.h
 
 re:					fclean all
 
@@ -70,6 +66,7 @@ gitpush:			fclean
 					rm .gitpush
 
 .PHONY:				all clean fclean re libft_make
+
 
 #-c говорит не запускать линкер, потому что нет main
 #-g порождает отладочную информацию в родном формате операционной системы

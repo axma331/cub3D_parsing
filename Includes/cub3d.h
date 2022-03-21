@@ -1,8 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "libft.h"
-# include <mlx.h>
+# include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -61,7 +60,6 @@ typedef struct		s_data
 	t_temp			t;
 	unsigned char 	f;
 }					t_data;
-
 
 void	parsing_start(t_data *s, int ac, char *av[]);
 int		get_correctly_maps_fd(int ac, char *av[]);

@@ -1,6 +1,5 @@
 #include "cub3d.h"
 
-/*Перевести в интовый*/
 void	convert_one_dimension_map(t_data *s)
 {
 	int	i;
