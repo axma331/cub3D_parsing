@@ -20,7 +20,7 @@ void	convert_one_dimension_map(t_data *s)
 		while (s->t.map_width > y++)
 			s->map_str[++i] = ' ';
 	}
-	if (!s->map[x + 1])
+	if (!s->map[x])
 		s->map_str[++i] = '\0';
 	free(s->map);
 }
@@ -76,10 +76,10 @@ static int	check_maps_error(const char *line, t_data *s, int i)
 	}	
 	while (line[i] == ' ' || line[i] == '\t' || !line[0])
 	{
-		if (!line[++i] && *s->map)
-			ft_exit("incorrect map!", 1);
-		else if (!line[++i])
+		 if (!line[i])
 			return (-1);
+		else if (!line[++i] && *s->map)
+			ft_exit("incorrect map!", 1);
 	}
 	return (i);
 }
