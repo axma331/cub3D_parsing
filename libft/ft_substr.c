@@ -6,7 +6,7 @@
 /*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 13:56:40 by feschall          #+#    #+#             */
-/*   Updated: 2022/03/21 13:33:04 by feschall         ###   ########.fr       */
+/*   Updated: 2022/03/23 13:22:05 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	// char			*str;
-	// unsigned char	i;
-
-	// i = 0;
-	// if (!s)
-	// 	return (NULL);
-	// str = (char *)malloc(len + 1);
-	// if (!str)
-	// 	return (0);
-	// if (start < ft_strlen(s) + 1)
-	// {
-	// 	while (i < len && s[start + 1])
-	// 	{
-	// 		str[i] = s[start + i];
-	// 		i++;
-	// 	}
-	// }
-	// str[i + 1] = '\0';
-	// return (str);
 	char	*sub;
 
 	if (!s || len <= 0)

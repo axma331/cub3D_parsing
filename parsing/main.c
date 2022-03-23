@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/23 15:27:29 by feschall          #+#    #+#             */
+/*   Updated: 2022/03/23 15:27:47 by feschall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	print_data(t_data *s)
@@ -21,11 +33,11 @@ void	print_data(t_data *s)
 	printf("\tmap[%d]\t|%s|\n", i, s->map[i]);
 }
 
-int main(int ac, char **av) {
+int	main(int ac, char **av)
+{
 	t_data	s;
 
 	parsing_start(&s, ac, av);
-	print_data(&s);
-	// free(s.txtr);
+	free_after_parsing(&s);
 	return (0);
 }

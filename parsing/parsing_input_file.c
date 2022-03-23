@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_input_file.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/23 15:21:58 by feschall          #+#    #+#             */
+/*   Updated: 2022/03/23 15:22:02 by feschall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	get_correctly_maps_fd(int ac, char *av[])
@@ -26,6 +38,7 @@ void	init_file_content(int fd, t_data *s)
 	char	*line;
 
 	ret_gnl = 1;
+	line = NULL;
 	while (ret_gnl)
 	{
 		ret_gnl = get_next_line(fd, &line);
@@ -37,10 +50,14 @@ void	init_file_content(int fd, t_data *s)
 			if (ft_isdigit(*line) && s->f < VLD)
 				ft_exit("Incorrect file content", 1);
 			if (init_texture(line, s))
+			{
+				free(line);
 				continue ;
+			}
 		}
 		if (s->f == VLD)
 			init_map(line, s);
+		free(line);
 	}
 }
 
@@ -54,4 +71,14 @@ void	parsing_start(t_data *s, int ac, char *av[])
 	checking_boundary_symbols(s, '0');
 	check_player(s);
 	convert_one_dimension_map(s);
+}
+
+void	free_after_parsing(t_data *s)
+{
+	free(s->map_str);
+	free(s->txtr->no);
+	free(s->txtr->so);
+	free(s->txtr->we);
+	free(s->txtr->ea);
+	free(s->txtr);
 }

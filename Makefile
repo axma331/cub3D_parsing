@@ -6,8 +6,6 @@ CFLAGS				=	-Wall -Wextra -Werror
 CFLAGS				+=	-O2 -g
 # CFLAGS				+=	-fsanitize=address
 
-NORM				= 	-R CheckForbiddenSourceHeader
-
 LIBFT_DIR			= 	./libft/
 LIBFT				= 	$(LIBFT_DIR)libft.a
 LIBFT_HED			= 	$(LIBFT_DIR)libft.h

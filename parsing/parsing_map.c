@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_map.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/23 15:22:39 by feschall          #+#    #+#             */
+/*   Updated: 2022/03/23 15:22:42 by feschall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	convert_one_dimension_map(t_data *s)
@@ -18,6 +30,7 @@ void	convert_one_dimension_map(t_data *s)
 			s->map_str[++i] = s->map[x][y];
 		while (s->t.map_width > y++)
 			s->map_str[++i] = ' ';
+		free(s->map[x]);
 	}
 	if (!s->map[x])
 		s->map_str[++i] = '\0';
@@ -64,7 +77,7 @@ void	checking_boundary_symbols(t_data *s, const char c)
 
 static int	check_maps_error(const char *line, t_data *s)
 {
-	int i;
+	int	i;
 
 	if (!s->map)
 	{
@@ -95,10 +108,10 @@ void	init_map(char *line, t_data *s)
 		ft_exit("incorrect map borders!", 1);
 	while (i < width)
 		if (!ft_strchr(" \t01NSWE", line[i++]))
-			ft_exit("incorrect map!", 1);	
+			ft_exit("incorrect map!", 1);
 	if (s->t.map_width < width)
 		s->t.map_width = width;
-	s->map[s->t.lines_cnt++] = line;
+	s->map[s->t.lines_cnt++] = ft_strdup(line);
 	s->t.mass = s->map;
 	s->map = (char **)ft_calloc(s->t.lines_cnt + 1, sizeof(char *));
 	if (!s->map)
