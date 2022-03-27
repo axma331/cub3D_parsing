@@ -6,7 +6,7 @@
 /*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:27:29 by feschall          #+#    #+#             */
-/*   Updated: 2022/03/27 18:34:27 by feschall         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:44:48 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av)
 	t_data	s;
 
 	parsing_start(&s, ac, av);
-	print_data(&s);
+	// print_data(&s);
 	free_after_parsing(&s);
 	return (0);
 }
