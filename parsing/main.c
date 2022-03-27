@@ -6,7 +6,7 @@
 /*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:27:29 by feschall          #+#    #+#             */
-/*   Updated: 2022/03/23 15:32:51 by feschall         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:31:54 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ void	print_data(t_data *s)
 	}
 	/*one dimension map*/
 	int j = -1;
+	if (s->map_str) {
 	while (s->map_str[++j])
 		!(j % s->t.map_width) ? (j != 0 ? printf("|\n\t|") : printf("\n\t|")) : printf("%c", s->map_str[j]);
-	printf("|\n\n");
+	printf("|\n\n"); }
 	/*two dimension map*/
 	int i = -1;
+	if (s->map) {
 	while (s->map[++i])
 		printf("\tmap[%d]\t|%s|\n", i, s->map[i]);
-	printf("\tmap[%d]\t|%s|\n", i, s->map[i]);
+	printf("\tmap[%d]\t|%s|\n", i, s->map[i]); }
 }
 
 int	main(int ac, char **av)
@@ -38,7 +40,7 @@ int	main(int ac, char **av)
 	t_data	s;
 
 	parsing_start(&s, ac, av);
-	// print_data(&s);
+	print_data(&s);
 	free_after_parsing(&s);
 	return (0);
 }

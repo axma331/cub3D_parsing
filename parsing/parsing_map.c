@@ -6,7 +6,7 @@
 /*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:22:39 by feschall          #+#    #+#             */
-/*   Updated: 2022/03/23 15:22:42 by feschall         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:30:57 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ void	convert_one_dimension_map(t_data *s)
 		while (s->t.map_width > y++)
 			s->map_str[++i] = ' ';
 		free(s->map[x]);
+		s->map[x] = NULL;
 	}
 	if (!s->map[x])
 		s->map_str[++i] = '\0';
-	free(s->map);
+	s->map = NULL;
 }
 
 static bool	check_boundary(char **map, char smbl, int x, int y)
@@ -86,7 +87,11 @@ static int	check_maps_error(const char *line, t_data *s)
 			ft_exit(strerror(errno), 1);
 	}
 	if (!line[0])
+	{
+		if (*s->map)
+			ft_exit("map break!", 1);
 		return (-1);
+	}
 	i = 0;
 	while (ft_strchr(" \t", line[i]))
 		++i;
