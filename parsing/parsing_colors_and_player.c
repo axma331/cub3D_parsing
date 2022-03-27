@@ -6,7 +6,7 @@
 /*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:22:22 by feschall          #+#    #+#             */
-/*   Updated: 2022/03/23 15:22:25 by feschall         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:37:06 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	check_player(t_data *s)
 
 	y = -1;
 	pos = 0;
-	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
+	while (s->map && s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
 	{
 		pos = find_position("NSWE", s->map[y]);
 		if (pos != -1)

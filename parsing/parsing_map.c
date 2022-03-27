@@ -6,7 +6,7 @@
 /*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:22:39 by feschall          #+#    #+#             */
-/*   Updated: 2022/03/27 18:30:57 by feschall         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:35:47 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	checking_boundary_symbols(t_data *s, const char c)
 	int	x;
 
 	y = -1;
-	while (s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
+	while (s->map && s->map[++y] && *s->map[y] && y < s->t.lines_cnt)
 	{
 		x = 0;
 		while (s->map[y][x] == ' ')

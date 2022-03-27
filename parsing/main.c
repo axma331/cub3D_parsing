@@ -6,7 +6,7 @@
 /*   By: feschall <feschall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:27:29 by feschall          #+#    #+#             */
-/*   Updated: 2022/03/27 18:31:54 by feschall         ###   ########.fr       */
+/*   Updated: 2022/03/27 18:34:27 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_data(t_data *s)
 	/*player pisition*/
 	printf ("\n\tdir:\t|%c|\n\tx:\t|%d|\n\ty:\t|%d|\n", s->plyr.dir, s->plyr.x, s->plyr.y);
 	/*texture*/
-	if (s->txtr){
+	if (s->txtr && s->txtr->no && s->txtr->so && s->txtr->we && s->txtr->ea){
 		printf("\tNO\t|%s|\n\tSO\t|%s|\n\tWE\t|%s|\n\tEA\t|%s|\n", s->txtr->no, s->txtr->so, s->txtr->we, s->txtr->ea);
 		printf("	F	|%d,%d,%d|\n	C	|%d,%d,%d|\n", s->txtr->f[0], s->txtr->f[1], s->txtr->f[2], s->txtr->c[0], s->txtr->c[1], s->txtr->c[2]);
 	}
